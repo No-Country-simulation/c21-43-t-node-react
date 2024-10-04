@@ -1,2 +1,3 @@
-# c21-43-t-node-react
-c21-43-t-node-react group repository
+# Repositorio del grupo c21-43-t-node-react para el proyecto de Ecommerce
+
+
