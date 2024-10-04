@@ -1,0 +1,12 @@
+# Exported from Render on 2024-10-04T05:57:07Z
+services:
+- type: web
+  name: c21-43-t-node-react
+  runtime: node
+  repo: https://github.com/No-Country-simulation/c21-43-t-node-react
+  plan: free
+  region: oregon
+  buildCommand: npm install && npm run build
+  startCommand: npm run start
+  rootDir: frontend
+version: "1"
