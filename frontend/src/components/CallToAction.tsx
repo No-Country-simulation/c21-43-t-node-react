@@ -10,10 +10,10 @@ export const CallToAction = () => {
                 Cada artículo está cuidadosamente hecho a mano, utilizando materiales sostenibles y técnicas tradicionales.
             </p>
             <div className="mt-4 sm:mt-8 sm:flex sm:flex-row space-y-3 sm:space-y-0 sm:space-x-5">
-                <Button size="lg" className="text-black bg-white w-full hover:bg-gray-400">
+                <Button size="xl" className="text-black bg-white w-full hover:bg-gray-400">
                     Explorar Más
                 </Button>
-                <Button size="lg" className="w-full">
+                <Button size="xl" className="w-full">
                     Haz tu Pedido
                 </Button>
             </div>
