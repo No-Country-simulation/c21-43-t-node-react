@@ -1,7 +1,11 @@
 # Node 
-
+/backend/node_modules
 /frontend/node_modules
 
 # Next
 
 /frontend/.next
+
+
+#variables de entorno .env 
+.env
