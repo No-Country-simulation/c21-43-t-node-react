@@ -5,7 +5,6 @@ dotenv.config();
 
 //BASE DE DATOS LOCAL
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, PORT, DB_URI } = process.env;
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, PORT, DB_URI } = process.env;
 
 // const sequelize = new Sequelize(
 //   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${PORT || 5432}/${DB_NAME}`,
@@ -15,14 +14,6 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, PORT, DB_URI } = process.env;
 // );
 
 //BASE DE DATOS RAILWAY
-const sequelize = new Sequelize(`${DB_URI}`, {
-
-//Para utilizar base de datos local:
-// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${PORT}/${DB_NAME}`, {
-//   logging: false,
-// });
-
-// base de datos deploy
 const sequelize = new Sequelize(`${DB_URI}`, {
   logging: false,
 });
