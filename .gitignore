@@ -2,10 +2,14 @@
 /backend/node_modules
 /frontend/node_modules
 
+
+#Compilacion y distribucion
+/backend/dist
+
 # Next
 
 /frontend/.next
 
 
-#variables de entorno .env 
-.env
+Variables de entorno
+/backend/.env
