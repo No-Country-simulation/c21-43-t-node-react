@@ -4,9 +4,7 @@ import sequelize from './database/db';
 
 dotenv.config();
 
-const PORT = 3000;
-
-
+const PORT = process.env.PORT_RAILWAY || 3000;
 
 const startServer = async()=>{
   try {
