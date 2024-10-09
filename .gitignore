@@ -1,7 +1,15 @@
 # Node 
-
+/backend/node_modules
 /frontend/node_modules
+
+
+#Compilacion y distribucion
+/backend/dist
 
 # Next
 
 /frontend/.next
+
+
+Variables de entorno
+/backend/.env

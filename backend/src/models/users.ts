@@ -1,4 +1,4 @@
-import sequelize, { DataTypes } from "../database";
+import sequelize, { DataTypes } from "../database/db";
 
 const User = sequelize.define("User", {
   id: {
@@ -12,5 +12,4 @@ const User = sequelize.define("User", {
   password: { type: DataTypes.STRING, allowNull: false },
 });
 
-User.sync({ alter: true });
 export default User;
