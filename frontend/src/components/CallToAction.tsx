@@ -13,7 +13,7 @@ export const CallToAction = () => {
                 <Button size="xl" className="text-black bg-white w-full hover:bg-gray-400">
                     Explorar Más
                 </Button>
-                <Button size="xl" className="w-full">
+                <Button size="xl" className="w-full bg-gray-800">
                     Haz tu Pedido
                 </Button>
             </div>
