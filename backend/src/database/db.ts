@@ -7,10 +7,10 @@ dotenv.config();
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, PORT, DB_URI } = process.env;
 
 const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${PORT || 5432}/${DB_NAME}`,
-  {
-    logging: false,
-  }
+ `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${PORT || 5432}/${DB_NAME}`,
+ {
+   logging: false,
+   }
 );
 
 //BASE DE DATOS RAILWAY
