@@ -5,7 +5,7 @@ import Product from "./products";
 import Stock from "./stock";
 import CartDetail from "./cartDetail";
 import Order from "./orders";
-import Category from "./category";
+import Category from "./categories";
 
 User.hasOne(Cart);
 Cart.belongsTo(User);
