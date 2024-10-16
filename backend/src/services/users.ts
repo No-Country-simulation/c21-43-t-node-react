@@ -18,6 +18,22 @@ class UsersService {
       throw error;
     }
   }
+  static async update(id: string, data: any) {
+    try {
+      const [user] = await User.update(data, { where: { id } });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async delete(id: string) {
+    try {
+      const user = await User.destroy({ where: { id } });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default UsersService;
