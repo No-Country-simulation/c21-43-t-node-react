@@ -1,3 +1,4 @@
+import { log } from "console";
 import User from "../models/users";
 
 class UsersService {
@@ -21,6 +22,8 @@ class UsersService {
   static async update(id: string, data: any) {
     try {
       const [user] = await User.update(data, { where: { id } });
+      console.log(user);
+
       return user;
     } catch (error) {
       throw error;

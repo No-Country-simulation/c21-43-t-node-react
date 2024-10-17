@@ -67,7 +67,7 @@ const User = sequelize.define("User", {
   },
 
   registrationType: {
-    type: DataTypes.TEXT, //.ENUM("Cliente", "Vendedor", "Administrador"), //STRING?
+    type: DataTypes.ENUM("Client", "Seller", "Admin"),
     allowNull: false,
   },
 });
