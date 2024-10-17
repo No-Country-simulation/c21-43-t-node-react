@@ -2,10 +2,9 @@ import sequelize, { DataTypes } from "../database/db";
 
 const User = sequelize.define("User", {
   id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
   },
 
   name: {
@@ -32,18 +31,18 @@ const User = sequelize.define("User", {
     },
   },
 
-  phoneNumber: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: { msg: "El número de teléfono no puede estar vacío" },
-      isNumeric: { msg: "El número de teléfono solo puede contener dígitos" },
-      len: {
-        args: [10, 15],
-        msg: "El número de teléfono debe tener entre 10 y 15 dígitos",
-      },
-    },
-  },
+  // phoneNumber: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false,
+  //   validate: {
+  //     notEmpty: { msg: "El número de teléfono no puede estar vacío" },
+  //     isNumeric: { msg: "El número de teléfono solo puede contener dígitos" },
+  //     len: {
+  //       args: [10, 15],
+  //       msg: "El número de teléfono debe tener entre 10 y 15 dígitos",
+  //     },
+  //   },
+  // },
 
   email: {
     type: DataTypes.STRING,
@@ -59,10 +58,6 @@ const User = sequelize.define("User", {
     allowNull: false,
     validate: {
       notEmpty: { msg: "La contraseña no puede estar vacía" },
-      len: {
-        args: [8, 100],
-        msg: "La contraseña debe tener al menos 8 caracteres",
-      },
     },
   },
 
