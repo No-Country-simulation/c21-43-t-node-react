@@ -1,13 +1,13 @@
 import { Router } from "express";
 import usersRouter from "./users";
-import productsRouter from "./products";
-import StockRouter from "./stock";
-import CategoryRouter from "./category";
+import categoryRouter from "./category";
+import productRouter from "./product";
 
 const indexRouter = Router();
 
 indexRouter.use("/users", usersRouter);
-indexRouter.use('/products', productsRouter);
-indexRouter.use('/stock', StockRouter)
-indexRouter.use('/category', CategoryRouter)
+indexRouter.use("/category", categoryRouter);
+indexRouter.use("/product",productRouter)
+
+
 export default indexRouter;
