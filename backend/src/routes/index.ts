@@ -7,7 +7,7 @@ const indexRouter = Router();
 
 indexRouter.use("/users", usersRouter);
 indexRouter.use("/category", categoryRouter);
-indexRouter.use("/product",productRouter)
+indexRouter.use("/products",productRouter)
 
 
 export default indexRouter;

@@ -11,5 +11,5 @@ export interface productData{
     price:number,
     image:string,
     stock:number,
-    categoryId:string
+    categoryId:string[]
 }

@@ -6,4 +6,4 @@ DB_PASSWORD=
 PORT=5432
 
 //VARIABLES DE ENTORNO PARA USAR DEPLOY DE LA BASE DE DATOS
-DB_URI=
+DB_URI=postgresql://postgres:XHouvPNhCMpihKzTVVIZhhmEYaSksHMz@junction.proxy.rlwy.net:48051/railway
