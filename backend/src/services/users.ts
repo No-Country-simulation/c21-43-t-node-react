@@ -13,6 +13,28 @@ class UsersService {
   static async create(data: any) {
     try {
       const user = await User.create(data);
+      console.log("usuario creado en USER SERVICE", user);
+
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getByEmail(email: string) {
+    try {
+      const user = await User.findOne({
+        where: {
+          email: email, // Busca por el campo "email"
+        },
+      });
+
+      if (!user) {
+        console.log("Usuario no encontrado");
+        //throw new Error("Usuario no encontrado");
+      }
+
+      console.log("Usuario encontrado:", user);
       return user;
     } catch (error) {
       throw error;
