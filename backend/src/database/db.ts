@@ -1,6 +1,5 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
 import dotenv from "dotenv";
-
+import { Sequelize, DataTypes, Model } from "sequelize";
 dotenv.config();
 
 //BASE DE DATOS LOCAL

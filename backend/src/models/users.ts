@@ -54,18 +54,6 @@ const User = sequelize.define("User", {
     },
   },
 
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: { msg: "La contraseña no puede estar vacía" },
-      len: {
-        args: [8, 100],
-        msg: "La contraseña debe tener al menos 8 caracteres",
-      },
-    },
-  },
-
   registrationType: {
     type: DataTypes.ENUM("Client", "Seller", "Admin"),
     allowNull: false,
