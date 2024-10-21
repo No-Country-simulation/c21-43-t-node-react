@@ -1,10 +1,14 @@
 import * as jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 
-async function checkJWT(req: Request, res: Response, next: NextFunction) {
+function checkJWT(req: Request, res: Response, next: NextFunction) {
+  // Obtiene el token desde el header Authorization
   const token = req.headers.authorization?.split(" ")[1];
 
-  if (!token) return res.status(400).json({ message: "token is required" });
+  if (!token) {
+    res.status(400).json({ message: "token is required" });
+    return;
+  }
 
   try {
     const data = jwt.verify(token, process.env.SECRET_KEY as jwt.Secret) as any;
@@ -14,6 +18,7 @@ async function checkJWT(req: Request, res: Response, next: NextFunction) {
     next();
   } catch (error) {
     res.status(401).json({ error: "token inválido" });
+    return;
   }
 }
 

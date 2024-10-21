@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import morgan from "morgan";
 import indexRouter from "./routes/index";
+import errorHandler from "./middlewares/errorHandler";
 
 dotenv.config();
 
@@ -18,5 +19,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", indexRouter);
+app.use(errorHandler);
 
 export default app;

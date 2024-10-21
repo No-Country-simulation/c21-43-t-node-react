@@ -94,6 +94,8 @@ class AuthService {
 
       // Buscar las credenciales del usuario en la tabla 'Auth'
       const userAuth: any = await Auth.findOne({ where: { userId: user.id } });
+      console.log("el userid es:", user.id);
+
       if (!userAuth) {
         throw new Error("No se encontraron credenciales asociadas al usuario");
       }
@@ -131,9 +133,20 @@ class AuthService {
     // }
   }
 
-  static async logout() {
+  static async logout(token: any) {
     try {
-      // const user = await Auth.logout();
+      // Busca un registro en la base de datos donde el token coincida
+      const authUser = await Auth.findOne({ where: { token: token } });
+
+      // Si no se encuentra el usuario, lanza un error
+      if (!authUser) {
+        const error: any = new Error("token no encontrado");
+        error.statusCode = 404;
+        throw error;
+      }
+      // Devuelve el usuario encontrado si todo está bien
+      return authUser;
+      //await Auth.logout(req.body);
     } catch (error) {
       throw error;
     }

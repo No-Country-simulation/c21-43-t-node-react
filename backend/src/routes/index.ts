@@ -9,4 +9,5 @@ indexRouter.use("/auth", authRouter);
 // indexRouter.use('/products', productsRouter);
 // indexRouter.use('/stock', StockRouter)
 // indexRouter.use('/category', CategoryRouter)
+
 export default indexRouter;
