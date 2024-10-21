@@ -23,3 +23,9 @@ export interface orderData{
     totalAmount:number
 }
 
+
+export interface cartData{
+    id?:string,
+    status:string,
+    userId?:string
+}
