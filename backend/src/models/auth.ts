@@ -27,9 +27,6 @@ const Auth = sequelize.define("Auth", {
   token: {
     type: DataTypes.STRING,
     allowNull: false,
-    validate: {
-      notEmpty: { msg: "El token es requerido" },
-    },
   },
 });
 

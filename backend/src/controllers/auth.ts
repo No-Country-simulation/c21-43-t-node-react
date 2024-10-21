@@ -23,6 +23,11 @@ class AuthController {
 
   static async logout(req: Request, res: Response, next: NextFunction) {
     try {
+      const token: any = req.headers.authorization?.split(" ")[1];
+      console.log("Token recibido:", token);
+
+      await Auth.logout(token);
+
       res.status(200).json({ message: "Logout exitoso" });
     } catch (error) {
       next(error);

@@ -29,7 +29,7 @@ class AuthService {
   // }
 
   static async register(data: any) {
-    console.log("entre al registro con", data);
+    //console.log("entre al registro con", data);
 
     try {
       const { email, name, lastName, phoneNumber, password, registrationType } =
@@ -62,7 +62,9 @@ class AuthService {
         email: newUser.email,
         role: newUser.registrationType,
       });
-      console.log("hashed pass", hashedPassword);
+      //console.log("hashed pass", hashedPassword);
+
+      console.log("TOKEN DEL REGISTRO", token);
 
       // 6. Guardar el password hasheado, el id del usuario y el token en la tabla de `Auth`
       const authRecord = await Auth.create({
@@ -94,7 +96,7 @@ class AuthService {
 
       // Buscar las credenciales del usuario en la tabla 'Auth'
       const userAuth: any = await Auth.findOne({ where: { userId: user.id } });
-      console.log("el userid es:", user.id);
+      //console.log("el userid es:", user.id);
 
       if (!userAuth) {
         throw new Error("No se encontraron credenciales asociadas al usuario");
@@ -110,6 +112,13 @@ class AuthService {
       if (hashedPassword === userAuth.password) {
         // Si coinciden, generar un nuevo token
         const token = createToken({ id: user.id, role: user.registrationType });
+        //console.log("TOKEN DEL LOGIN", token);
+
+        // Actualizar el token en la base de datos
+        await Auth.update(
+          { token: token }, // Aquí estableces el nuevo token
+          { where: { id: user.id } } // Donde el ID del usuario coincide
+        );
 
         return { message: "Login exitoso", token };
       } else {
@@ -133,7 +142,7 @@ class AuthService {
     // }
   }
 
-  static async logout(token: any) {
+  static async logout(token: string) {
     try {
       // Busca un registro en la base de datos donde el token coincida
       const authUser = await Auth.findOne({ where: { token: token } });
@@ -144,7 +153,12 @@ class AuthService {
         error.statusCode = 404;
         throw error;
       }
-      // Devuelve el usuario encontrado si todo está bien
+
+      // Borrar el token de la base de datos
+      await Auth.update({ token: "" }, { where: { token: token } });
+      // console.log("user sin token:", authUser);
+
+      // Devuelve el usuario encontrado
       return authUser;
       //await Auth.logout(req.body);
     } catch (error) {
