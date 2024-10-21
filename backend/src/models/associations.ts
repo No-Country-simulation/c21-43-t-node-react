@@ -15,11 +15,14 @@ Review.belongsTo(User);
 Product.hasMany(Review);
 Review.belongsTo(Product);
 
-// CartDetail.hasMany(Product);
-// Product.belongsTo(CartDetail);
+
+Cart.belongsToMany(Product,{through:CartDetail}); //Un carrito puede tener muchos Productos
+Product.belongsToMany(Cart,{through:CartDetail}); //Un producto puede estar en muchos carritos
+
 
 Cart.hasMany(CartDetail);
 CartDetail.belongsTo(Cart);
+
 
 Order.hasOne(Cart);
 Cart.belongsTo(Order);

@@ -5,6 +5,10 @@ const Cart = sequelize.define("Cart", {
     type: DataTypes.INTEGER,
     primaryKey: true,
   },
+  status:{
+    type: DataTypes.STRING,
+    allowNull:false,
+  }
 });
 
 export default Cart;

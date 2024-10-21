@@ -13,3 +13,13 @@ export interface productData{
     stock:number,
     categoryId:string[]
 }
+
+
+
+export interface orderData{
+    id?:string,
+    orderDate:Date,
+    shippingAddress:string,
+    totalAmount:number
+}
+
