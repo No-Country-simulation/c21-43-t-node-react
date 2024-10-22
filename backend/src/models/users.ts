@@ -53,6 +53,7 @@ const User = sequelize.define("User", {
     },
   },
 
+<<<<<<< HEAD
   password: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -61,8 +62,10 @@ const User = sequelize.define("User", {
     },
   },
 
+=======
+>>>>>>> 985a617c41f270cdf585b86b66a535b89f29467d
   registrationType: {
-    type: DataTypes.TEXT, //.ENUM("Cliente", "Vendedor", "Administrador"), //STRING?
+    type: DataTypes.ENUM("Client", "Seller", "Admin"),
     allowNull: false,
   },
 });

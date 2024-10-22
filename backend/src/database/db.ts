@@ -1,15 +1,18 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
 import dotenv from "dotenv";
+<<<<<<< HEAD
+=======
+import { Sequelize, DataTypes, Model } from "sequelize";
+>>>>>>> 985a617c41f270cdf585b86b66a535b89f29467d
 dotenv.config();
 
 //BASE DE DATOS LOCAL
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, PORT, DB_URI } = process.env;
 
 const sequelize = new Sequelize(
- `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${PORT || 5432}/${DB_NAME}`,
- {
-   logging: false,
-   }
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${PORT || 5432}/${DB_NAME}`,
+  {
+    logging: false,
+  }
 );
 
 //BASE DE DATOS RAILWAY

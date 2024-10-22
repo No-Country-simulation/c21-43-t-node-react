@@ -5,6 +5,7 @@ import Product from "./products";
 import CartDetail from "./cartDetail";
 import Order from "./orders";
 import Category from "./categories";
+import Auth from "./auth";
 
 User.hasOne(Cart);
 Cart.belongsTo(User);
@@ -31,4 +32,7 @@ Product.belongsToMany(Category,{through: "ProductCategory"});
 Category.belongsToMany(Product,{through: "ProductCategory"});
 
 
-export { User, Cart, Product, Review, Order, CartDetail, Category };
+User.hasOne(Auth, { foreignKey: 'userId', as: 'auth' });
+Auth.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+export { User, Cart, Product, Review, Order, CartDetail, Category, Auth };
