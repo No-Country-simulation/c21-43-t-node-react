@@ -4,7 +4,7 @@ const User = sequelize.define("User", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
-    primaryKey: true
+    primaryKey: true,
   },
 
   name: {
@@ -53,17 +53,6 @@ const User = sequelize.define("User", {
     },
   },
 
-<<<<<<< HEAD
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: { msg: "La contraseña no puede estar vacía" },
-    },
-  },
-
-=======
->>>>>>> 985a617c41f270cdf585b86b66a535b89f29467d
   registrationType: {
     type: DataTypes.ENUM("Client", "Seller", "Admin"),
     allowNull: false,

@@ -5,7 +5,7 @@ class UsersController {
   static async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const users = await UsersService.getAll();
-      res.status(200).json({data: users });
+      res.status(200).json({ data: users });
     } catch (error) {
       next(error);
     }
@@ -13,12 +13,9 @@ class UsersController {
 
   static async create(req: Request, res: Response, next: NextFunction) {
     try {
-        const user = await UsersService.create(req.body);
-        res.status(201).json({message: "Usuario creado", data: user });
+      const user = await UsersService.create(req.body);
+      res.status(201).json({ data: user });
     } catch (error) {
-<<<<<<< HEAD
-        next(error);
-=======
       next(error);
     }
   }
@@ -36,9 +33,8 @@ class UsersController {
       res.status(200).json({ data: user });
     } catch (error) {
       next(error);
->>>>>>> 985a617c41f270cdf585b86b66a535b89f29467d
     }
-}
+  }
 }
 
 export default UsersController;
