@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 
-const Login: React.FC = () => {
+const SignIn: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const openModal = () => setIsOpen(true);
@@ -42,5 +42,5 @@ const Login: React.FC = () => {
     );
 };
 
-export default Login;
+export default SignIn;
 

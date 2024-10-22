@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import Link from 'next/link';
-import Login from './Login';
+import SignIn from './SingIn';
 
 const Navbar: React.FC = () => {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
                     </Link>
                 </div>
                 <div className="flex items-center">
-                    <Login />
+                    <SignIn />
                 </div>
             </div>
         </nav>
