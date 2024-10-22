@@ -12,7 +12,7 @@ export const Login = () => {
     };
 
     return (
-        <div className="relative flex items-center justify-center h-screen w-screen">
+        <div className="relative flex items-center justify-center h-screen">
             <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80"
                 style={{
                     backgroundImage: `url('/fondo.jpg')`,
