@@ -41,28 +41,28 @@ export const ProductDetail = () => {
     const reviews = reviewData.review;
 
     return (
-        <div className="container mx-auto px-8 py-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 h-screen">
-                <div className="">
+        <div className="container mx-auto px-14 py-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20 md:mb-16 pt-12">
+                <div className="flex justify-center items-center">
                     <img
                         src={product.image}
                         alt={product.name}
-                        className="w-3/4 h-auto rounded-lg shadow-md"
+                        className="w-3/4 h-auto object-cover rounded-lg shadow-md"
                     />
                 </div>
                 <div>
                     <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
                     <p className="mb-6">{product.description}</p>
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex flex-row justify-between items-center mb-6">
                         <span className="text-2xl font-semibold">${product.price.toFixed(2)}</span>
                         <span className={`text-sm font-medium ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
                             {product.stock > 0 ? `STOCK: ${product.stock}` : 'Agotado'}
                         </span>
                     </div>
-                    <div className="flex items-center gap-4 mb-6">
+                    <div className="flex items-center gap-4 mb-6 mt-14">
                         <label htmlFor="quantity" className="font-medium">Cantidad:</label>
                         <Select>
-                            <SelectTrigger className="w-24">
+                            <SelectTrigger className="w-26">
                                 <SelectValue placeholder="Cantidad" />
                             </SelectTrigger>
                             <SelectContent>
@@ -72,7 +72,7 @@ export const ProductDetail = () => {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="flex gap-4">
+                    <div className="flex flex-wrap gap-4">
                         <Button className="flex-1" disabled={product.stock === 0}>
                             <ShoppingCart className="mr-2 h-4 w-4" />
                             {product.stock > 0 ? 'Añadir al carrito' : 'Agotado'}
@@ -86,7 +86,7 @@ export const ProductDetail = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 mt-10 gap-12 mb-10">
                 <div className="">
                     <h2 className="text-xl font-semibold mb-6">Comentarios de usuarios</h2>
                     <div className="space-y-6 mb-8">
