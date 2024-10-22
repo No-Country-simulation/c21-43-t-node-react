@@ -1,26 +1,23 @@
-// src/index.ts
-import express from 'express';
-import morgan from 'morgan';
 import dotenv from 'dotenv';
+import app from './app';
+import sequelize from './database/db';
+import './models/associations';
 
-// Inicializar dotenv para usar variables de entorno
 dotenv.config();
+const PORT = 3000;
 
-const app = express();
 
-// Middleware
-app.use(express.json());
-app.use(morgan('dev')); // Para mostrar logs de peticiones HTTP
 
-// Puerto desde variables de entorno o un puerto por defecto
-const PORT = process.env.PORT || 3000;
+const startServer = async()=>{
+  try {
+    await sequelize.sync({force:true})
+    app.listen(PORT, () => {
+      console.log(`Server is running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('Error al iniciar el servidor',error)
+  }
+};
 
-// Ruta básica para verificar que el servidor está funcionando
-app.get('/', (req, res) => {
-  res.send('Welcome to the E-commerce Backend!');
-});
 
-// Iniciar el servidor
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+startServer();

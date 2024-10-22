@@ -5,7 +5,7 @@ class UsersController {
   static async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const users = await UsersService.getAll();
-      res.status(200).json({ data: users });
+      res.status(200).json({data: users });
     } catch (error) {
       throw error;
     }
@@ -13,12 +13,12 @@ class UsersController {
 
   static async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await UsersService.create(req.body);
-      res.status(201).json({ data: user });
+        const user = await UsersService.create(req.body);
+        res.status(201).json({message: "Usuario creado", data: user });
     } catch (error) {
-      throw error;
+        next(error);
     }
-  }
+}
 }
 
 export default UsersController;

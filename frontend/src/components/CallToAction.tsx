@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const CallToAction = () => {
     return (
@@ -13,9 +14,11 @@ export const CallToAction = () => {
                 <Button size="xl" className="text-black bg-white w-full hover:bg-gray-400">
                     Explorar Más
                 </Button>
-                <Button size="xl" className="w-full">
-                    Haz tu Pedido
-                </Button>
+                <Link href="/product">
+                    <Button size="xl" className="w-full">
+                        Haz tu Pedido
+                    </Button>
+                </Link>
             </div>
         </div>
     )
