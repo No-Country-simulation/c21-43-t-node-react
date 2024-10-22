@@ -35,6 +35,33 @@ class CategoryService {
         )}
     }
 
+    static async categoryUpdate(data:categoryData){
+        try {
+            const category = await Category.findByPk(data.id);
+            if(!category){
+                throw new Error(`Category with id ${data.id} not found`)
+            }
+            await category.update(data);
+            return category;
+        } catch (error) {
+            throw error
+        }
+    };
+
+
+    static async categoryDelete(id:string) {
+        try {
+          const category = await Category.findByPk(id);
+          if (!category) {
+            throw new Error(`Category with id ${id} not found`);
+          }
+          await category.destroy();
+          return category;
+        } catch (error) {
+          throw error; 
+        }
+      }   
+
 }
 
 

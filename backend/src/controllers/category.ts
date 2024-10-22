@@ -22,6 +22,20 @@ class CategoryController{
         }
     }
 
+
+    static async deleteCategory(req: Request, res:Response, next: NextFunction){
+        try{
+            const {id} = req.params;
+            const deletedCategory = await CategoryService.categoryDelete(id);
+            res.status(201).json({data:deletedCategory});
+        }catch(error){
+            throw error;
+        }
+      }
+
+
+    
+
     
 }
 

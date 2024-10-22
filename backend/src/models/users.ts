@@ -31,18 +31,18 @@ const User = sequelize.define("User", {
     },
   },
 
-  // phoneNumber: {
-  //   type: DataTypes.STRING,
-  //   allowNull: false,
-  //   validate: {
-  //     notEmpty: { msg: "El número de teléfono no puede estar vacío" },
-  //     isNumeric: { msg: "El número de teléfono solo puede contener dígitos" },
-  //     len: {
-  //       args: [10, 15],
-  //       msg: "El número de teléfono debe tener entre 10 y 15 dígitos",
-  //     },
-  //   },
-  // },
+  phoneNumber: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: { msg: "El número de teléfono no puede estar vacío" },
+      isNumeric: { msg: "El número de teléfono solo puede contener dígitos" },
+      len: {
+        args: [10, 15],
+        msg: "El número de teléfono debe tener entre 10 y 15 dígitos",
+      },
+    },
+  },
 
   email: {
     type: DataTypes.STRING,
