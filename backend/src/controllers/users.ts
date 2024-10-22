@@ -7,7 +7,7 @@ class UsersController {
       const users = await UsersService.getAll();
       res.status(200).json({ data: users });
     } catch (error) {
-      throw error;
+      next(error);
     }
   }
 
@@ -16,7 +16,23 @@ class UsersController {
       const user = await UsersService.create(req.body);
       res.status(201).json({ data: user });
     } catch (error) {
-      throw error;
+      next(error);
+    }
+  }
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = await UsersService.update(req.params.id, req.body);
+      res.status(200).json({ data: user });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = await UsersService.delete(req.params.id);
+      res.status(200).json({ data: user });
+    } catch (error) {
+      next(error);
     }
   }
 }

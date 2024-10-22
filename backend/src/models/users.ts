@@ -2,9 +2,8 @@ import sequelize, { DataTypes } from "../database/db";
 
 const User = sequelize.define("User", {
   id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
 
@@ -54,20 +53,8 @@ const User = sequelize.define("User", {
     },
   },
 
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: { msg: "La contraseña no puede estar vacía" },
-      len: {
-        args: [8, 100],
-        msg: "La contraseña debe tener al menos 8 caracteres",
-      },
-    },
-  },
-
   registrationType: {
-    type: DataTypes.TEXT, //.ENUM("Cliente", "Vendedor", "Administrador"), //STRING?
+    type: DataTypes.ENUM("Client", "Seller", "Admin"),
     allowNull: false,
   },
 });

@@ -2,10 +2,10 @@ import User from "./users";
 import Cart from "./cart";
 import Review from "./reviews";
 import Product from "./products";
-import Stock from "./stock";
 import CartDetail from "./cartDetail";
 import Order from "./orders";
 import Category from "./categories";
+import Auth from "./auth";
 
 User.hasOne(Cart);
 Cart.belongsTo(User);
@@ -16,19 +16,23 @@ Review.belongsTo(User);
 Product.hasMany(Review);
 Review.belongsTo(Product);
 
-CartDetail.hasMany(Product);
-Product.belongsTo(CartDetail);
+
+Cart.belongsToMany(Product,{through:CartDetail}); //Un carrito puede tener muchos Productos
+Product.belongsToMany(Cart,{through:CartDetail}); //Un producto puede estar en muchos carritos
+
 
 Cart.hasMany(CartDetail);
 CartDetail.belongsTo(Cart);
 
-Order.hasOne(Cart);
-Cart.belongsTo(Order);
 
-Category.hasMany(Product);
-Product.belongsTo(Category);
+Cart.hasMany(Order);
+Order.belongsTo(Cart);
 
-Product.hasOne(Stock);
-Stock.belongsTo(Product);
+Product.belongsToMany(Category,{through: "ProductCategory"});
+Category.belongsToMany(Product,{through: "ProductCategory"});
 
-export { User, Cart, Product, Stock, Review, Order, CartDetail, Category };
+
+User.hasOne(Auth, { foreignKey: 'userId', as: 'auth' });
+Auth.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+export { User, Cart, Product, Review, Order, CartDetail, Category, Auth };
