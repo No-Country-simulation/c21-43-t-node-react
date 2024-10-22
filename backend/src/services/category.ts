@@ -1,5 +1,5 @@
 import Category from "../models/categories";
-import { categoryData } from "../type";
+import { categoryData } from "../types/type";
 
 
 
@@ -15,11 +15,24 @@ class CategoryService {
 
     static async createCategory(data: categoryData){
         try {
-            const category = await Category.create({name:data.name});
-            return category
-        } catch (error) {
+
+            const verifyCategory = await Category.findOne({
+                where:{
+                    name: data.name
+                }
             
-        }
+            });
+
+            if (verifyCategory){
+                throw new Error("Categoría existente")
+            }
+
+            const category = await Category.create({name:data.name});
+
+            return category
+        } catch (error:any) {
+           throw new Error(`Error al crear la categoría: ${error.message}`
+        )}
     }
 
 }

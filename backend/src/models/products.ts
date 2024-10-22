@@ -36,7 +36,12 @@ const Product = sequelize.define("Product", {
             },
             min:0
         }
-    },
-});
+    }
+},
+{
+    paranoid:true,
+    timestamps:true
+}
+);
 
 export default Product;
