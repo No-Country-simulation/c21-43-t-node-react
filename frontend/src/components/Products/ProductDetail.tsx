@@ -10,14 +10,14 @@ const reviewData: Reviews = {
         {
             id: 1,
             author: "Juan Pérez",
-            content: "Excelentes zapatillas, muy cómodas y duraderas.",
+            content: "XD",
             rating: 5,
             date: "2023-05-15"
         },
         {
             id: 2,
             author: "María García",
-            content: "Buena calidad, pero un poco caras.",
+            content: "XD",
             rating: 4,
             date: "2023-06-02"
         }
@@ -39,7 +39,7 @@ export const ProductDetail = ({ product }: ProductDetailProps ) => {
                         className="w-3/4 h-auto object-cover rounded-lg shadow-md"
                     />
                 </div>
-                <div>
+                <div className="">
                     <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
                     <p className="mb-6">{product.description}</p>
                     <div className="flex flex-row justify-between items-center mb-6">

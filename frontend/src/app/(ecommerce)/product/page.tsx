@@ -52,7 +52,7 @@ const Page = () => {
 
     return (
         <div className="flex flex-col container p-4 mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-16">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-8">
                 <h3 className="text-3xl mb-3 md:mb-0">Productos</h3>
                 <Link href="/product/create" className="w-full md:w-auto">
                     <Button className="bg-[#f27405d8] w-full md:w-auto hover:bg-[#595302]">Crear Producto</Button>
