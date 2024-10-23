@@ -64,19 +64,17 @@ class AuthService {
       });
       //console.log("hashed pass", hashedPassword);
 
-      console.log("TOKEN DEL REGISTRO", token);
-
-      // 6. Guardar el password hasheado, el id del usuario y el token en la tabla de `Auth`
+      // 6. Guardar el password hasheado y el id del usuario.
       const authRecord = await Auth.create({
         userId: newUser.id, // el id del usuario recién creado
         password: hashedPassword, // la contraseña hasheada
-        token, // el token generado
       });
 
       return {
         message: "Usuario registrado exitosamente",
         user: newUser,
-        auth: authRecord,
+        authRecord: authRecord,
+        token: token,
       };
     } catch (error: any) {
       throw new Error(error.message || "Error al registrar el usuario");
@@ -112,13 +110,6 @@ class AuthService {
       if (hashedPassword === userAuth.password) {
         // Si coinciden, generar un nuevo token
         const token = createToken({ id: user.id, role: user.registrationType });
-        //console.log("TOKEN DEL LOGIN", token);
-
-        // Actualizar el token en la base de datos
-        await Auth.update(
-          { token: token }, // Aquí estableces el nuevo token
-          { where: { id: user.id } } // Donde el ID del usuario coincide
-        );
 
         return { message: "Login exitoso", token };
       } else {
@@ -142,29 +133,13 @@ class AuthService {
     // }
   }
 
-  static async logout(token: string) {
-    try {
-      // Busca un registro en la base de datos donde el token coincida
-      const authUser = await Auth.findOne({ where: { token: token } });
-
-      // Si no se encuentra el usuario, lanza un error
-      if (!authUser) {
-        const error: any = new Error("token no encontrado");
-        error.statusCode = 404;
-        throw error;
-      }
-
-      // Borrar el token de la base de datos
-      await Auth.update({ token: "" }, { where: { token: token } });
-      // console.log("user sin token:", authUser);
-
-      // Devuelve el usuario encontrado
-      return authUser;
-      //await Auth.logout(req.body);
-    } catch (error) {
-      throw error;
-    }
-  }
+  // static async logout() {
+  //   try {
+  //     return { message: "Logout exitoso" };
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 }
 
 export default AuthService;
