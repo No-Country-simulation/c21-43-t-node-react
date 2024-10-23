@@ -1,4 +1,3 @@
-import { log } from "console";
 import User from "../models/users";
 
 class UsersService {
@@ -13,10 +12,20 @@ class UsersService {
 
   static async create(data: any) {
     try {
-      const user = await User.create(data);
-      console.log("usuario creado en USER SERVICE", user);
+      const { registrationType } = data;
 
-      return user;
+      const validTypes = ["Client", "Seller", "Admin"];
+      if (!validTypes.includes(registrationType)) {
+        const error: any = new Error(
+          "El tipo de usuario debe ser 'Client', 'Seller' o 'Admin'."
+        );
+        error["statusCode"] = 400;
+        throw error;
+      }
+
+      const newUser = await User.create(data);
+
+      return newUser;
     } catch (error) {
       throw error;
     }
