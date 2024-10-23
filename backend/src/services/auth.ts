@@ -29,7 +29,7 @@ class AuthService {
   // }
 
   static async register(data: any) {
-    console.log("entre al registro con", data);
+    //console.log("entre al registro con", data);
 
     try {
       const { email, name, lastName, phoneNumber, password, registrationType } =
@@ -62,19 +62,19 @@ class AuthService {
         email: newUser.email,
         role: newUser.registrationType,
       });
-      console.log("hashed pass", hashedPassword);
+      //console.log("hashed pass", hashedPassword);
 
-      // 6. Guardar el password hasheado, el id del usuario y el token en la tabla de `Auth`
+      // 6. Guardar el password hasheado y el id del usuario.
       const authRecord = await Auth.create({
         userId: newUser.id, // el id del usuario recién creado
         password: hashedPassword, // la contraseña hasheada
-        token, // el token generado
       });
 
       return {
         message: "Usuario registrado exitosamente",
         user: newUser,
-        auth: authRecord,
+        authRecord: authRecord,
+        token: token,
       };
     } catch (error: any) {
       throw new Error(error.message || "Error al registrar el usuario");
@@ -94,6 +94,8 @@ class AuthService {
 
       // Buscar las credenciales del usuario en la tabla 'Auth'
       const userAuth: any = await Auth.findOne({ where: { userId: user.id } });
+      //console.log("el userid es:", user.id);
+
       if (!userAuth) {
         throw new Error("No se encontraron credenciales asociadas al usuario");
       }
@@ -131,13 +133,13 @@ class AuthService {
     // }
   }
 
-  static async logout() {
-    try {
-      // const user = await Auth.logout();
-    } catch (error) {
-      throw error;
-    }
-  }
+  // static async logout() {
+  //   try {
+  //     return { message: "Logout exitoso" };
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 }
 
 export default AuthService;
