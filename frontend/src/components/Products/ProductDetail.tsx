@@ -1,20 +1,9 @@
-
-
 import { ShoppingCart, Star, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Product, Reviews } from "@/interfaces";
+import { Reviews, ProductDetailProps } from "@/interfaces";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "../ui/textarea";
-
-const productData: Product = {
-    name: "Vela Aromática",
-    description: "Vela hecha a mano con cera de soja",
-    price: 15,
-    image: "https://res.cloudinary.com/djnpocgwl/image/upload/v1729160222/tbqq9uo4jgtrmi8hrcgr.webp",
-    stock: 10,
-    categoryId: "1",
-};
 
 const reviewData: Reviews = {
     review: [
@@ -35,9 +24,9 @@ const reviewData: Reviews = {
     ]
 };
 
-export const ProductDetail = () => {
+export const ProductDetail = ({ product }: ProductDetailProps ) => {
 
-    const product = productData;
+    const price = parseFloat(product.price.toString());
     const reviews = reviewData.review;
 
     return (
@@ -54,7 +43,7 @@ export const ProductDetail = () => {
                     <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
                     <p className="mb-6">{product.description}</p>
                     <div className="flex flex-row justify-between items-center mb-6">
-                        <span className="text-2xl font-semibold">${product.price.toFixed(2)}</span>
+                        <span className="text-2xl font-semibold">${price.toFixed(2)}</span>
                         <span className={`text-sm font-medium ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
                             {product.stock > 0 ? `STOCK: ${product.stock}` : 'Agotado'}
                         </span>
