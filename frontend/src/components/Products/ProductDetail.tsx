@@ -22,7 +22,7 @@ const reviewData: Reviews = {
             date: "2023-06-02"
         }
     ]
-};
+}; 
 
 export const ProductDetail = ({ product }: ProductDetailProps ) => {
 
