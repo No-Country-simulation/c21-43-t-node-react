@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,11 +9,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Upload, DollarSign, Package } from 'lucide-react';
-//import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
-//import { Toast, ToastProvider, ToastTitle, ToastDescription } from '@/components/ui/toast';
 import { useToast } from '@/hooks/use-toast';
 import axios from 'axios';
-import { Product } from '@/interfaces';
+import { Product, Category } from '@/interfaces';
 
 
 const uploadToCloudinary = async (file: File): Promise<string> => {
@@ -40,11 +38,38 @@ export default function page() {
         categoryId: ''
     });
 
+    const [categories, setCategories] = useState<Category[]>([]);
+
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    //const [alert, setAlert] = useState<{ type: 'success' | 'error', message: string } | null>(null);
     const { toast } = useToast();
+
+    useEffect(() => {
+
+        const fetchCategories = async () => {
+
+            try {
+
+                const response = await axios.get('https://c21-43-t-node-react-production-227f.up.railway.app/category');
+                setCategories(response.data.data);
+
+            } catch (error) {
+
+                console.error('Error al obtener las categorías:', error);
+                toast({
+                    variant: 'destructive',
+                    title: 'Error',
+                    description: 'No se pudieron cargar las categorías',
+                });
+
+            }
+
+        };
+
+        fetchCategories();
+
+    }, [toast]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
@@ -87,7 +112,7 @@ export default function page() {
                 image: uploadedImageUrl
             };
 
-            await axios.post('http://localhost:3001/product', newProduct);
+            await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/products', newProduct);
 
             setProduct({
                 name: '',
@@ -100,8 +125,6 @@ export default function page() {
 
             setImageFile(null);
             setPreviewUrl(null);
-
-            //setAlert({ type: 'success', message: 'Producto creado con éxito' });
 
             toast({
                 variant: 'default',
@@ -201,10 +224,11 @@ export default function page() {
                                             <SelectValue placeholder="Selecciona" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="ba917f9e-97b2-4d14-927a-a49fea729b0b">Natural</SelectItem>
-                                            <SelectItem value="clothing">Ropa</SelectItem>
-                                            <SelectItem value="books">Libros</SelectItem>
-                                            <SelectItem value="home">Hogar</SelectItem>
+                                            {categories.map(category => (
+                                                <SelectItem key={category.id} value={category.id}>
+                                                    {category.name}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
