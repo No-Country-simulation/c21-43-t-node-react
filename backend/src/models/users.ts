@@ -2,8 +2,8 @@ import sequelize, { DataTypes } from "../database/db";
 
 const User = sequelize.define("User", {
   id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
 
