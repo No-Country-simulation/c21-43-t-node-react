@@ -30,9 +30,9 @@ export const ProductDetail = ({ product }: ProductDetailProps ) => {
     const reviews = reviewData.review;
 
     return (
-        <div className="container mx-auto px-14 py-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20 md:mb-16 pt-12">
-                <div className="flex justify-center items-center">
+        <div className="container mx-auto px-5 py-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-20 md:mb-16 pt-12">
+                <div className="flex justify-center md:justify-start items-center">
                     <img
                         src={product.image}
                         alt={product.name}
