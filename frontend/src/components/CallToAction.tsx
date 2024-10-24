@@ -15,7 +15,7 @@ export const CallToAction = () => {
                     Explorar Más
                 </Button>
                 <Link href="/products">
-                    <Button size="xl" className="w-full bg-gray-800">
+                    <Button size="xl" className="w-full">
                         Haz tu Pedido
                     </Button>
                 </Link>

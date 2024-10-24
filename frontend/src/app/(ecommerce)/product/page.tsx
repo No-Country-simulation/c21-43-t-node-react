@@ -52,13 +52,13 @@ const Page = () => {
 
     return (
         <div className="flex flex-col container p-4 mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-16">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-6">
                 <h3 className="text-3xl mb-3 md:mb-0">Productos</h3>
                 <Link href="/product/create" className="w-full md:w-auto">
                     <Button className="bg-[#f27405d8] w-full md:w-auto hover:bg-[#595302]">Crear Producto</Button>
                 </Link>
             </div>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center mb-10">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center mb-6">
                 {products.map((product) => (
                     <Card key={product.id} className="w-full cursor-pointer transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg">
                         <CardHeader>
