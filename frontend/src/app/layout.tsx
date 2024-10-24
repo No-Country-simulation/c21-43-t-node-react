@@ -4,6 +4,10 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header";
 
+import { Ubuntu } from 'next/font/google';
+
+const ubuntu = Ubuntu({ subsets: ['latin'], weight: ['400'], });
+
 
 export const metadata: Metadata = {
   title: "Ecommerce",
@@ -17,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
+      <body className={`${ubuntu.className} flex flex-col min-h-screen`}>
         <Header/>
         <main className="flex-grow">{children}</main>
         <Footer />
