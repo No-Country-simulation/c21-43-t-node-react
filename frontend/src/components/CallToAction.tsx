@@ -11,7 +11,7 @@ export const CallToAction = () => {
                 Cada artículo está cuidadosamente hecho a mano, utilizando materiales sostenibles y técnicas tradicionales.
             </p>
             <div className="mt-4 sm:mt-8 sm:flex sm:flex-row sm:space-x-5">
-                <Button size="xl" className="text-black bg-white w-full hover:bg-gray-400">
+                <Button size="xl" className="text-black bg-white w-full hover:bg-gray-400 mb-4 md:mb-0">
                     Explorar Más
                 </Button>
                 <Link href="/product">
