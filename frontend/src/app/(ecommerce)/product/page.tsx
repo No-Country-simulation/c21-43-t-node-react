@@ -15,40 +15,40 @@ interface Product {
     stock: number;
 }
 
-const products = [
-    { 
-        id: 1, 
-        name: "Bolso tejido de yute", 
-        description: "Descripcion 1",
-        stock: 10,
-        image: "https://res.cloudinary.com/djnpocgwl/image/upload/v1729162029/yrzcchhwkzpdb4n2eqzm.jpg",
-        price: 40
-    },
-];
+// const products = [
+//     { 
+//         id: 1, 
+//         name: "Bolso tejido de yute", 
+//         description: "Descripcion 1",
+//         stock: 10,
+//         image: "https://res.cloudinary.com/djnpocgwl/image/upload/v1729162029/yrzcchhwkzpdb4n2eqzm.jpg",
+//         price: 40
+//     },
+// ];
 
 const Page = () => {
 
-    //const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     const fetchProducts = async () => {
+        const fetchProducts = async () => {
 
-    //         try {
+            try {
 
-    //             const response = await axios.get("http://localhost:3001/product");
-    //             setProducts(response.data.data);
+                const response = await axios.get("http://localhost:3000/products");
+                setProducts(response.data.data);
 
-    //         } catch (error) {
+            } catch (error) {
 
-    //             console.error("Error Obteniendo Productos:", error);
+                console.error("Error Obteniendo Productos:", error);
 
-    //         }
-    //     };
+            }
+        };
 
-    //     fetchProducts();
+        fetchProducts();
 
-    // }, []);
+    }, []);
 
     return (
         <div className="flex flex-col container p-4 mx-auto">
@@ -60,30 +60,33 @@ const Page = () => {
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center mb-6">
                 {products.map((product) => (
-                    <Card key={product.id} className="w-full cursor-pointer transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg">
-                        <CardHeader>
-                            <CardTitle>{product.name}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <img
-                                src={product.image}
-                                alt={product.name}
-                                width={300}
-                                height={200}
-                                className="mb-4 rounded-md mx-auto"
-                            />
-                            <CardDescription>{product.description}</CardDescription>
-                            <div className="flex flex-row items-center justify-between">
-                                <p className="text-lg font-semibold mt-2">Precio: ${product.price}</p>
-                                <p className="text-md mt-1">Stock: {product.stock}</p>
-                            </div>
-                        </CardContent>
-                        {/* <CardFooter>
+                    <Link key={product.id} href={`/product/${product.id}/detail`}>
+                        <Card className="w-full cursor-pointer transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg">
+                            <CardHeader>
+                                <CardTitle>{product.name}</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    width={300}
+                                    height={200}
+                                    className="mb-4 rounded-md mx-auto"
+                                />
+                                <CardDescription>{product.description}</CardDescription>
+                                <div className="flex flex-row items-center justify-between">
+                                    <p className="text-lg font-semibold mt-2">Precio: ${product.price}</p>
+                                    <p className="text-md mt-1">Stock: {product.stock}</p>
+                                </div>
+                            </CardContent>
+                            {/* <CardFooter>
                             <Link href={`/products/${product.id}/update`}>
                                 <Button variant="default">Editar</Button>
                             </Link>
                         </CardFooter> */}
-                    </Card>
+                        </Card>
+                    </Link>
+
                 ))}
             </div>
         </div>

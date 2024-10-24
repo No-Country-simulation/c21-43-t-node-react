@@ -27,7 +27,6 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
                     </SheetContent>
                 </Sheet>
             </div>
-
         </nav>
     );
 };
