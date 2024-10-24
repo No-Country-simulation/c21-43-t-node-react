@@ -1,60 +1,49 @@
-
-
 import { ShoppingCart, Star, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Product, Reviews } from "@/interfaces";
+import { Reviews, ProductDetailProps } from "@/interfaces";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "../ui/textarea";
-
-const productData: Product = {
-    name: "Vela Aromática",
-    description: "Vela hecha a mano con cera de soja",
-    price: 15,
-    image: "https://res.cloudinary.com/djnpocgwl/image/upload/v1729160222/tbqq9uo4jgtrmi8hrcgr.webp",
-    stock: 10,
-    categoryId: "1",
-};
 
 const reviewData: Reviews = {
     review: [
         {
             id: 1,
             author: "Juan Pérez",
-            content: "Excelentes zapatillas, muy cómodas y duraderas.",
+            content: "XD",
             rating: 5,
             date: "2023-05-15"
         },
         {
             id: 2,
             author: "María García",
-            content: "Buena calidad, pero un poco caras.",
+            content: "XD",
             rating: 4,
             date: "2023-06-02"
         }
     ]
-};
+}; 
 
-export const ProductDetail = () => {
+export const ProductDetail = ({ product }: ProductDetailProps ) => {
 
-    const product = productData;
+    const price = parseFloat(product.price.toString());
     const reviews = reviewData.review;
 
     return (
-        <div className="container mx-auto px-14 py-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20 md:mb-16 pt-12">
-                <div className="flex justify-center items-center">
+        <div className="container mx-auto px-5 py-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-20 md:mb-16 pt-12">
+                <div className="flex justify-center md:justify-start items-center">
                     <img
                         src={product.image}
                         alt={product.name}
                         className="w-3/4 h-auto object-cover rounded-lg shadow-md"
                     />
                 </div>
-                <div>
+                <div className="">
                     <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
                     <p className="mb-6">{product.description}</p>
                     <div className="flex flex-row justify-between items-center mb-6">
-                        <span className="text-2xl font-semibold">${product.price.toFixed(2)}</span>
+                        <span className="text-2xl font-semibold">${price.toFixed(2)}</span>
                         <span className={`text-sm font-medium ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
                             {product.stock > 0 ? `STOCK: ${product.stock}` : 'Agotado'}
                         </span>

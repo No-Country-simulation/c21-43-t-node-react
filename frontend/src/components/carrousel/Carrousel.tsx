@@ -64,6 +64,7 @@ export const Carrousel = () => {
     dots: true,
     infinite: true,
     speed: 500,
+    arrows: false,
     slidesToShow: 4,
     slidesToScroll: 4,
     responsive: [
@@ -92,11 +93,11 @@ export const Carrousel = () => {
   }
 
   return (
-    <div className="bg-[#FFF5E6]  p-4 max-w-7xl mx-auto my-20">
-      <h2 className="text-3xl text-center font-bold tracking-tight text-gray-900 mb-6">Productos Destacados</h2>
-      <Slider {...settings}>
+    <div className="bg-[#ffe3cad8]  p-4 max-w-7xl mx-auto my-20 py-10 rounded-md">
+      <h2 className="text-3xl text-center font-bold text-gray-900 mb-6">Productos Destacados</h2>
+      <Slider {...settings} >
         {products.map((product) => (
-          <div key={product.id} className="px-2">
+          <div key={product.id} className="px-2 mb-6">
             <div className="relative w-full" style={{ paddingBottom: '100%' }}>
               <img
                 alt={product.imageAlt}
