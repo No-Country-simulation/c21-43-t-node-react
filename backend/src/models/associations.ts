@@ -21,8 +21,8 @@ Cart.belongsToMany(Product,{through:CartDetail}); //Un carrito puede tener mucho
 Product.belongsToMany(Cart,{through:CartDetail}); //Un producto puede estar en muchos carritos
 
 
-Cart.hasMany(CartDetail);
-CartDetail.belongsTo(Cart);
+// Cart.hasMany(CartDetail);
+// CartDetail.belongsTo(Cart);
 
 
 Cart.hasMany(Order);

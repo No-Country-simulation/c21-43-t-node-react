@@ -5,6 +5,7 @@ class AuthController {
   static async register(req: Request, res: Response, next: NextFunction) {
     try {
       const auth = await Auth.register(req.body);
+      console.log(req.body);
 
       res.status(200).json({ data: auth });
     } catch (error) {
@@ -23,9 +24,7 @@ class AuthController {
 
   static async logout(req: Request, res: Response, next: NextFunction) {
     try {
-      //await Auth.logout(req.body);
-
-      res.status(200).send();
+      res.status(200).json({ message: "Logout exitoso" });
     } catch (error) {
       next(error);
     }

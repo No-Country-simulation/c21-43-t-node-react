@@ -29,3 +29,9 @@ export interface cartData{
     status:string,
     userId?:string
 }
+
+interface CartDetailData{
+    CartId: number;
+    ProductId: number;
+    quantity: number;
+}

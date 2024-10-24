@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import Auth from "../controllers/auth";
+import checkJWT from "../middlewares/verifyJwt";
 
 const authRouter = Router();
 
