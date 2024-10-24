@@ -28,7 +28,7 @@ export const HeroSection = () => {
     }, [images.length]);
 
     return (
-        <main className="relative w-full h-[calc(100vh-4rem)] sm:h-[calc(100vh-4rem)] overflow-hidden">
+        <main className="relative w-full h-[calc(100vh-5rem)] sm:h-[calc(100vh-5rem)] overflow-hidden">
             <div className="w-full h-full overflow-hidden relative">
                 <Image
                     src={images[currentIndex].src}

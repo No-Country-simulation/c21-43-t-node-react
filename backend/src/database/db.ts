@@ -13,7 +13,6 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, PORT} = process.env;
    logging: false,
     }
  ); 
-
 async function testConnection() {
   try {
     await sequelize.authenticate();
