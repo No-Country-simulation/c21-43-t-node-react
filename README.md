@@ -2,7 +2,7 @@
 
 <br />
 <div align="center">
-    <img src="\frontend\public\Logo_Horizontal_Blanco@3x.png" alt="Logo" width="80" height="80">
+    <img src="\frontend\public\Logo_Horizontal_Blanco@3x.png" alt="Logo" width="100" height="80">
 
   <h3 align="center">Tierra y Alma - Tienda de productos artesanales</h3>
 
