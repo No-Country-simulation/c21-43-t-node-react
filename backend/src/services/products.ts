@@ -4,20 +4,30 @@ import { productData } from "../types/type";
 import { Op } from "sequelize";
 
 class ProductService {
-  static async getAllProducts() {
+  static async getAllProducts(page: number = 1, limit: number = 5) {
     try {
-      const products = await Product.findAll({
-        include: {
-          model: Category,
-          attributes: ["id", "name"],
-          through: { attributes: [] },
-        },
-      });
-      return products;
+        const offset = (page - 1) * limit;
+
+        const { count, rows } = await Product.findAndCountAll({
+            limit: limit,
+            offset: offset,
+            include: {
+                model: Category,
+                attributes: ["id", "name"],
+                through: { attributes: [] },
+            },
+        });
+
+        return {
+            products: rows,
+            currentPage: page,
+            totalProducts: count, 
+            totalPages: Math.ceil(count / limit),
+        };
     } catch (error) {
-      throw error;
+        throw error;
     }
-  }
+}
 
   static async getProductByName(data:string){
     try {
@@ -39,6 +49,39 @@ class ProductService {
       throw new Error('Hubo un problema al buscar el producto.');
     }
   }
+
+  static async getProductsByCategory(categoryId: string) {
+    try {
+        const products = await Product.findAll({
+             include: [
+                {
+                    model: Category,
+                    where: { id: categoryId }, 
+                    attributes: ['id', 'name'],
+                    through: { attributes: [] },
+                },
+            ],
+        });
+        return products;
+    } catch (error) {
+        throw error;
+    }
+  }
+
+static async getProductsByPriceRange(minPrice: number, maxPrice: number) {
+    try {
+        const products = await Product.findAll({
+            where: {
+                price: {
+                    [Op.between]: [minPrice, maxPrice]
+                }
+            }
+        });
+        return products;
+    } catch (error) {
+        throw error; 
+    }
+}
 
   static async getProductId(id: string) {
     try {
