@@ -30,7 +30,7 @@ class UsersController {
   static async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await UsersService.delete(req.params.id);
-      res.status(200).json({ data: user });
+      res.status(200).json({ message: user });
     } catch (error) {
       next(error);
     }
