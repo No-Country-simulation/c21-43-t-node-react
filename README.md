@@ -81,7 +81,7 @@ A continuación, se detallan las herramientas y lenguajes empleados en el desarr
 ### Testers
 | Nombre                 | LinkedIn                                                                                  | GitHub                                                                     |
 |------------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| **Adriana López**      | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/adrianalopezdemora/) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/adrianalopezdemora) |
+| **Adriana López De Mora**      | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/adrianalopezdemora/) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/adrianalopezdemora) |
 | **Camila Battagliotti**| [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](http://www.linkedin.com/in/camila-battagliotti) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](http://github.com/CamilaBattagliotti) |
 
 
