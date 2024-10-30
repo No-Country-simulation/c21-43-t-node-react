@@ -36,7 +36,7 @@ export const Login = () => {
     };
 
     return (
-        <div className="relative flex items-center justify-center h-screen">
+        <div className="relative flex items-center justify-center h-[calc(100vh-5rem)] sm:h-[calc(100vh-5rem)]">
             <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80"
                 style={{
                     backgroundImage: `url('/fondo.jpg')`,

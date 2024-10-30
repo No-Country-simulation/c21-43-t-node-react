@@ -1,6 +1,8 @@
-import { ShoppingCart, CircleUserRound } from 'lucide-react';
+import { ShoppingCart, CircleUserRound, Settings } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from 'next/link';
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@/components/ui/context-menu";
+import { Button } from '@/components/ui/button';
 
 interface NavbarProps {
     className?: string;
