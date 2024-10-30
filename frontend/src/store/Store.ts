@@ -3,10 +3,13 @@ import { persist } from 'zustand/middleware'
 import { jwtDecode } from 'jwt-decode'
 
 interface Usuario {
-    id: string;
-    nombre: string;
-    apellido: string;
-    email: string;
+    user: {
+        id: string;
+        name: string;
+        lastName: string;
+        email: string;
+
+    }
 }
 
 interface Store {

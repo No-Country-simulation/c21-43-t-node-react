@@ -36,8 +36,8 @@ const Page = () => {
 
         try {
 
-            //const response = await axios.get("https://c21-43-t-node-react-production-227f.up.railway.app/products");
-            const response = await axios.get("http://localhost:3000/products");
+            const response = await axios.get("https://c21-43-t-node-react-production-227f.up.railway.app/products");
+            // const response = await axios.get("http://localhost:3000/products");
 
             console.log(response)
             setProducts(response.data.products);
@@ -108,8 +108,8 @@ const Page = () => {
 
             try {
 
-                //const response = await axios.get('https://c21-43-t-node-react-production-227f.up.railway.app/category');
-                const response = await axios.get('http://localhost:3000/category');
+                const response = await axios.get('https://c21-43-t-node-react-production-227f.up.railway.app/category');
+                // const response = await axios.get('http://localhost:3000/category');
                 setCategories(response.data.data);
 
             } catch (error) {
@@ -158,7 +158,7 @@ const Page = () => {
         setMinPrice("");
         setMaxPrice("");
         setCategoryFilter("");
-        fetchProducts(); 
+        fetchProducts();
     };
 
     return (
@@ -234,7 +234,7 @@ const Page = () => {
                 </aside>
 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 flex-grow">
-                    {products.map((product) => (
+                    {products?.map((product) => (
                         <Card key={product.id} className="w-full">
                             <CardHeader>
                                 <CardTitle>{product.name}</CardTitle>

@@ -59,8 +59,8 @@ export const Signup = () => {
         try {
 
 
-            //const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/register', userData);
-            const response = await axios.post('http://localhost:3000/auth/register', userData);
+            const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/register', userData);
+            // const response = await axios.post('http://localhost:3000/auth/register', userData);
 
             if (response.status === 200) {
 
