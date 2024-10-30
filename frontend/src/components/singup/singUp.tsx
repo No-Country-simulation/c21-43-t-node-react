@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import axios from 'axios';
+import { useRouter } from "next/navigation";
 import { useStore } from '../../store/Store'
 
 export const Signup = () => {
@@ -11,6 +12,8 @@ export const Signup = () => {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const setToken = useStore((state) => state.setToken)
+
+    const router = useRouter();
 
 
 
@@ -29,20 +32,23 @@ export const Signup = () => {
             lastName,
             phoneNumber,
             password,
-            registrationType: 'usuario',
+            registrationType: 'Client',
         };
+        console.log(userData)
 
         try {
-            const response = await axios.post('http://localhost:3000/auth/register', userData);
+            const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/register', userData);
 
 
-            console.log(response)
+
             if (response.status === 200) {
+                setToken(response.data.data.token)
 
 
+                router.push('/product');
             }
         } catch (error) {
-            console.error("Error during registration:", error);
+            console.error(error);
             alert("An error occurred during registration. Please try again.");
         }
     };
