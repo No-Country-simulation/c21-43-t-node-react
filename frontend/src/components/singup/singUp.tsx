@@ -11,6 +11,7 @@ export const Signup = () => {
     const [phoneNumber, setPhoneNumber] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const setUsuario = useStore((state) => state.setUsuario);
     const setToken = useStore((state) => state.setToken)
 
     const router = useRouter();
@@ -42,6 +43,7 @@ export const Signup = () => {
 
 
             if (response.status === 200) {
+                setUsuario(response.data.data)
                 setToken(response.data.data.token)
 
 

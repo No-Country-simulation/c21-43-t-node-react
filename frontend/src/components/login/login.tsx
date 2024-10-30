@@ -8,6 +8,7 @@ import { useStore } from "@/store/Store";
 export const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const setUsuario = useStore((state) => state.setUsuario);
     const setToken = useStore((state) => state.setToken)
 
     const router = useRouter();
@@ -26,6 +27,7 @@ export const Login = () => {
             console.log(response.data.data)
             if (response.status === 200) {
                 setToken(response.data.data.token)
+                setUsuario(response.data.data)
                 router.push('/product');
 
             }
