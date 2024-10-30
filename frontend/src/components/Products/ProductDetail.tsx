@@ -4,6 +4,7 @@ import { Reviews, ProductDetailProps } from "@/interfaces";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "../ui/textarea";
+import Link from "next/link";
 
 const reviewData: Reviews = {
     review: [
@@ -22,9 +23,9 @@ const reviewData: Reviews = {
             date: "2023-06-02"
         }
     ]
-}; 
+};
 
-export const ProductDetail = ({ product }: ProductDetailProps ) => {
+export const ProductDetail = ({ product }: ProductDetailProps) => {
 
     const price = parseFloat(product.price.toString());
     const reviews = reviewData.review;
@@ -63,8 +64,10 @@ export const ProductDetail = ({ product }: ProductDetailProps ) => {
                     </div>
                     <div className="flex flex-wrap gap-4">
                         <Button className="flex-1" disabled={product.stock === 0}>
-                            <ShoppingCart className="mr-2 h-4 w-4" />
-                            {product.stock > 0 ? 'Añadir al carrito' : 'Agotado'}
+                            <Link href="/cart" className="flex items-center">
+                                <ShoppingCart className="mr-2 h-4 w-4" />
+                                {product.stock > 0 ? 'Añadir al carrito' : 'Agotado'}
+                            </Link>
                         </Button>
 
                         <Button className="flex-1" disabled={product.stock === 0}>
