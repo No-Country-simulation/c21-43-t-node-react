@@ -13,6 +13,8 @@ import { useToast } from '@/hooks/use-toast';
 import axios from 'axios';
 import { Product, Category } from '@/interfaces';
 
+import { useRouter } from 'next/navigation'
+
 
 const uploadToCloudinary = async (file: File): Promise<string> => {
 
@@ -28,6 +30,8 @@ const uploadToCloudinary = async (file: File): Promise<string> => {
 }
 
 export default function page() {
+
+    const navigate = useRouter();
 
     const [product, setProduct] = useState<Product>({
         name: '',
@@ -51,7 +55,8 @@ export default function page() {
 
             try {
 
-                const response = await axios.get('https://c21-43-t-node-react-production-227f.up.railway.app/category');
+                //const response = await axios.get('https://c21-43-t-node-react-production-227f.up.railway.app/category');
+                const response = await axios.get('http://localhost:3000/category');
                 setCategories(response.data.data);
 
             } catch (error) {
@@ -112,7 +117,8 @@ export default function page() {
                 image: uploadedImageUrl
             };
 
-            await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/products', newProduct);
+            //await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/products', newProduct);
+            await axios.post('http://localhost:3000/products', newProduct);
 
             setProduct({
                 name: '',
@@ -131,6 +137,8 @@ export default function page() {
                 title: 'Éxito',
                 description: 'Producto creado con éxito',
             });
+
+            navigate.push('/product');
 
         } catch (error) {
 

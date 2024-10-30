@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { jwtDecode } from 'jwt-decode'
 
 interface Usuario {
     id: string;
@@ -14,16 +15,34 @@ interface Store {
     setToken: (value: string) => void;
     setUsuario: (datosUsuario: Usuario) => void;
     limpiarUsuario: () => void;
+    getUserId: () => string | null;
+}
+
+interface DecodedToken {
+    id: string;
 }
 
 export const useStore = create<Store>()(
-    persist(// esto sirve para que el dato se guarde en el Local Storage y no se pierda
-        (set) => ({
+    persist(
+        (set, get) => ({
             token: '',
+
             usuario: null,
             setToken: (value) => set({ token: value }),
             setUsuario: (datosUsuario) => set({ usuario: datosUsuario }),
-            limpiarUsuario: () => set({ usuario: null })
+            limpiarUsuario: () => set({ usuario: null }),
+            getUserId: () => {
+                const token = get().token;
+                if (!token) return null;
+                try {
+                    const decoded: DecodedToken = jwtDecode(token);
+                    return decoded.id;
+                } catch (error) {
+                    console.error("Error decoding token", error);
+                    return null;
+                }
+            },
+
         }),
         { name: 'Store' }
     )

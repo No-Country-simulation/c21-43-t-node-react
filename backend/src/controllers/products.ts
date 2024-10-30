@@ -42,6 +42,8 @@
 
         static async getProductsByPriceRange(req: Request, res: Response, next: NextFunction) {
             const { minPrice, maxPrice } = req.query;
+
+            console.log(minPrice, maxPrice);
             try {
                 const productPrice = await ProductService.getProductsByPriceRange(minPrice as any, maxPrice as any);
                 res.status(200).json({ data: productPrice });
