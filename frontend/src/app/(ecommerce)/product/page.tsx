@@ -103,7 +103,7 @@ const Page = () => {
                         </Link>
                         <CardFooter className="flex flex-row items-center justify-between">
                             <div>
-                                <Link href={`/products/${product.id}/update`}>
+                                <Link href={`/product/${product.id}/update`}>
                                     <Button variant="default">Editar</Button>
                                 </Link>
                             </div>
