@@ -20,7 +20,7 @@ const Product = sequelize.define("Product", {
     },
     image: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
             isUrl: {
                 msg: "La imagen debe ser una URL válida",

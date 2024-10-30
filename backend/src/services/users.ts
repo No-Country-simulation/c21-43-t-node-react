@@ -1,4 +1,6 @@
+import { any } from "zod";
 import User from "../models/users";
+import { validateUser } from "../schemas/users";
 
 class UsersService {
   static async getAll() {
@@ -35,16 +37,16 @@ class UsersService {
     try {
       const user = await User.findOne({
         where: {
-          email: email, // Busca por el campo "email"
+          email: email,
         },
       });
 
-      if (!user) {
-        console.log("Usuario no encontrado");
-        //throw new Error("Usuario no encontrado");
-      }
+      // if (!user) {
+      //   const error: any = new Error("Usuario no encontrado");
+      //   error["statusCode"] = 404;
+      //   throw error;
+      // }
 
-      console.log("Usuario encontrado:", user);
       return user;
     } catch (error) {
       throw error;
@@ -52,8 +54,13 @@ class UsersService {
   }
   static async update(id: string, data: any) {
     try {
-      const [user] = await User.update(data, { where: { id } });
-      console.log(user);
+      const result: any = validateUser(data);
+      await User.update(result.data, { where: { id } });
+      const user = await User.findOne({
+        where: {
+          id: id,
+        },
+      });
 
       return user;
     } catch (error) {
@@ -62,8 +69,12 @@ class UsersService {
   }
   static async delete(id: string) {
     try {
-      const user = await User.destroy({ where: { id } });
-      return user;
+      const users = await User.destroy({ where: { id } });
+      if (!users) {
+        throw new Error("No existe el usuario en nuestros registros");
+      }
+
+      return `Usuario eliminado correctamente`;
     } catch (error) {
       throw error;
     }
