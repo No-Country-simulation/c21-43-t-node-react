@@ -20,17 +20,17 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
                     </SheetTrigger>
                     <SheetContent className='flex flex-col justify-between h-full'>
                         <div>
-                            <Link href="/login" className='block px-4 py-2 text-[#260A03] hover:text-black hover:bg-gray-200 transition-colors duration-200'>
+                            <Link href="/login" className='block px-4 py-2 w-40 text-[#260A03] hover:bg-gray-200 transition-colors duration-200'>
                                 Iniciar sesión
                             </Link>
-                            <Link href="/signup" className='block px-4 py-2 text-[#260A03] hover:text-black hover:bg-gray-200 transition-colors duration-200'>
+                            <Link href="/signup" className='block px-4 py-2 w-40 text-[#260A03] hover:bg-gray-200 transition-colors duration-200'>
                                 Registrarse</Link>
                         </div>
 
                         <div className="flex items-center mt-4 pt-4 border-t border-[#260A03]">
                             <ContextMenu>
                                 <ContextMenuTrigger>
-                                    <Button className="bg-transparent hover:bg-transparent">
+                                    <Button className="bg-transparent hover:bg-gray-200">
                                         <Settings className='text-[#260A03]' />
                                     </Button>
                                     <ContextMenuContent>
