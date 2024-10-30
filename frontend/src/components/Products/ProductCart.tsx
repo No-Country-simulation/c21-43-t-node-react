@@ -1,31 +1,33 @@
-"use client"
+"use client";
 
-import { useState } from "react";
-import { ShoppingCart, Plus, Minus, Trash2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Plus, Minus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from '@/components/ui/separator';
-
+import { Separator } from "@/components/ui/separator";
 import { Cart } from "@/interfaces";
+import Link from "next/link";
 
-export const ProductCart = () => {
+export const ProductCart = ({ products }: { products: Cart[] }) => {
 
-    const [productos, setProductos] = useState<Cart[]>([
-        { id: 1, nombre: "Camiseta", precio: 20, cantidad: 2 },
-        { id: 2, nombre: "Pantalón", precio: 40, cantidad: 1 },
-        { id: 3, nombre: "Zapatos", precio: 60, cantidad: 1 },
-    ])
+    const [productos, setProductos] = useState<Cart[]>(products);
+
+    useEffect(() => {
+        setProductos(products);
+    }, [products]); 
 
     const actualizarCantidad = (id: number, cambio: number) => {
         setProductos(productos.map(producto =>
             producto.id === id
-                ? { ...producto, cantidad: Math.max(0, producto.cantidad + cambio) }
+                ? { ...producto, cantidad: Math.max(0, producto.quantity + cambio) }
                 : producto
-        ).filter(producto => producto.cantidad > 0))
-    }
+        ).filter(producto => producto.quantity > 0));
+    };
 
-    const total = productos.reduce((sum, producto) => sum + producto.precio * producto.cantidad, 0)
-
+    const total = productos.reduce(
+        (sum, producto) => sum + (producto.price || 0) * (producto.quantity || 0),
+        0
+    );
 
     return (
         <div className="container mx-auto p-4 mb-4">
@@ -43,19 +45,19 @@ export const ProductCart = () => {
                                 {productos.map((producto) => (
                                     <li key={producto.id} className="flex justify-between items-center border-b pb-4">
                                         <div className="flex-1">
-                                            <h3 className="font-semibold">{producto.nombre}</h3>
-                                            <p className="text-sm text-gray-500">${producto.precio.toFixed(2)} cada uno</p>
+                                            <h3 className="font-semibold">{producto.name}</h3>
+                                            <p className="text-sm text-gray-500">${ producto.price } cada uno</p>
                                         </div>
                                         <div className="flex items-center space-x-2">
                                             <Button
                                                 variant="outline"
                                                 size="icon"
                                                 onClick={() => actualizarCantidad(producto.id, -1)}
-                                                disabled={producto.cantidad <= 1}
+                                                disabled={producto.quantity <= 1}
                                             >
                                                 <Minus className="h-4 w-4" />
                                             </Button>
-                                            <span className="w-8 text-center">{producto.cantidad}</span>
+                                            <span className="w-8 text-center">{producto.quantity}</span>
                                             <Button
                                                 variant="outline"
                                                 size="icon"
@@ -66,7 +68,7 @@ export const ProductCart = () => {
                                             <Button
                                                 variant="ghost"
                                                 size="icon"
-                                                onClick={() => actualizarCantidad(producto.id, -producto.cantidad)}
+                                                onClick={() => actualizarCantidad(producto.id, -producto.quantity)}
                                                 className="ml-2"
                                             >
                                                 <Trash2 className="h-4 w-4" />
@@ -86,8 +88,8 @@ export const ProductCart = () => {
                         <div className="space-y-4">
                             {productos.map((producto) => (
                                 <div key={producto.id} className="flex justify-between text-sm">
-                                    <span>{producto.nombre} (x{producto.cantidad})</span>
-                                    <span>${(producto.precio * producto.cantidad).toFixed(2)}</span>
+                                    <span>{producto.name} (x{producto.quantity})</span>
+                                    <span>${((producto.price || 0) * (producto.quantity || 0)).toFixed(2)}</span>
                                 </div>
                             ))}
                             <Separator />
@@ -99,7 +101,9 @@ export const ProductCart = () => {
                                 Proceder al Pago
                             </Button>
                             <Button variant="outline" className="w-full">
-                                Seguir Comprando
+                                <Link href="/product">
+                                    Seguir Comprando
+                                </Link>
                             </Button>
                         </div>
                     </CardContent>
@@ -107,5 +111,4 @@ export const ProductCart = () => {
             </div>
         </div>
     );
-
 };

@@ -1,6 +1,10 @@
 export interface Cart {
     id: number
-    nombre: string
-    precio: number
-    cantidad: number
+    name: string
+    price: number
+    quantity: number
+}
+
+export interface ProductCartProps {
+    products: Cart[];
 }

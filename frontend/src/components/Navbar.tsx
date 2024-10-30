@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from 'react';
 import { ShoppingCart, CircleUserRound, Settings } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from 'next/link';
@@ -10,11 +13,17 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ className }) => {
 
+    const [isOpen, setIsOpen] = useState(false);
+
+    const closeSheet = () => setIsOpen(false);
+
     return (
         <nav className={`flex flex-row justify-end items-center gap-2 ${className}`}>
-            <ShoppingCart className='w-8 h-8 text-white' />
+            <Link href="/cart">
+                <ShoppingCart className="w-8 h-8 text-white cursor-pointer" />
+            </Link>
             <div className='flex items-center justify-center'>
-                <Sheet>
+                <Sheet open={isOpen} onOpenChange={setIsOpen}>
                     <SheetTrigger asChild>
                         <button>
                             <CircleUserRound className='w-8 h-8 text-white' />
@@ -22,10 +31,10 @@ const Navbar: React.FC<NavbarProps> = ({ className }) => {
                     </SheetTrigger>
                     <SheetContent className='flex flex-col justify-between h-full'>
                         <div>
-                            <Link href="/login" className='block px-4 py-2 w-40 text-[#260A03] hover:bg-gray-200 transition-colors duration-200'>
+                            <Link href="/login" className='block px-4 py-2 w-40 text-[#260A03] hover:bg-gray-200 transition-colors duration-200' onClick={closeSheet}>
                                 Iniciar sesión
                             </Link>
-                            <Link href="/signup" className='block px-4 py-2 w-40 text-[#260A03] hover:bg-gray-200 transition-colors duration-200'>
+                            <Link href="/signup" className='block px-4 py-2 w-40 text-[#260A03] hover:bg-gray-200 transition-colors duration-200' onClick={closeSheet}>
                                 Registrarse</Link>
                         </div>
 

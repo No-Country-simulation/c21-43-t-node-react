@@ -17,7 +17,8 @@ const page = () => {
 
             try {
 
-                const response = await axios.get(`https://c21-43-t-node-react-production-227f.up.railway.app/products/${id}`);
+                //const response = await axios.get(`https://c21-43-t-node-react-production-227f.up.railway.app/products/${id}`);
+                const response = await axios.get(`http://localhost:3000/products/${id}`);
                 setProduct(response.data.data);
                 
             } catch (error) {
