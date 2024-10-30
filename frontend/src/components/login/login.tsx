@@ -1,14 +1,38 @@
 'use client'
+import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useStore } from "@/store/Store";
+
 
 export const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const setToken = useStore((state) => state.setToken)
 
-    const handleLogin = (e: React.FormEvent) => {
+    const router = useRouter();
+
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        // aca action para mandar
-        console.log("Email:", email, "Password:", password);
+
+        const userData = {
+            email,
+            password,
+        }
+        try {
+            const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/login', userData);
+
+
+            console.log(response.data.data)
+            if (response.status === 200) {
+                setToken(response.data.data.token)
+                router.push('/product');
+
+            }
+        } catch (error) {
+            console.error("Error during registration:", error);
+            alert("An error occurred during registration. Please try again.");
+        }
     };
 
     return (

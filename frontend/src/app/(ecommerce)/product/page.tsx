@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import axios from "axios";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-
-
+import { useStore } from '@/store/Store'
+        
 interface Product {
     id: string;
     name: string;
@@ -31,6 +31,8 @@ interface Product {
 const Page = () => {
 
     const [products, setProducts] = useState<Product[]>([]);
+    const token = useStore((state) => state.token)
+    console.log('token', token)
 
     useEffect(() => {
 
