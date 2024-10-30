@@ -20,7 +20,6 @@
     <li><a href="#about-the-project">Sobre el proyecto</a></li>
     <li><a href="#built-with">Herramientas y lenguajes utilizados</a></li>
     <li><a href="#contributing">Equipo</a></li>
-    <li><a href="#acknowledgments">Agradecimientos</a></li>
   </ol>
 </details>
 
@@ -29,10 +28,8 @@
 <!-- ABOUT THE PROJECT -->
 ## Sobre el proeyecto
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 Este proyecto nace de la necesidad de emprendedores locales de vender y hacer conocer sus productos a todos los vecinos de su comunidad. 
-La página web se ecarga de mostrar las diferentes tiendas de cada vededor con su mercaderia correspondiente 
+La página web se ecarga de mostrar las diferentes tiendas de cada vededor con su mercaderia correspondiente para que cada cliente pueda dirigirse de manera sencilla al producto o vendedor deseado.
 
 
 ### Herramientas y lenguajes utilizados
@@ -42,47 +39,49 @@ A continuación, se detallan las herramientas y lenguajes empleados en el desarr
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
 * [![TailwindCSS][TailwindCSS.com]][TailwindCSS-url]
-* [![MySQL][MySQL.com]][MySQL-url]
+* [![TypeScript][TypeScript.com]][TypeScript-url]
+* [![Node.js][Node.js]][Node-url]
+* [![Express][Express.js]][Express-url]
+* [![PostgreSQL][PostgreSQL.com]][PostgreSQL-url]
+* [![Sequelize][Sequelize.com]][Sequelize-url]
+* [![Swagger UI][SwaggerUI.com]][SwaggerUI-url]
+* [![JWT][JWT.io]][JWT-url]
 
 
 <!-- EQUIPO -->
 ## Equipo
 
 ### Frontend
-| Foto | Nombre | LinkedIn | GitHub |
-| --- | --- | --- | --- |
-| ![Foto](URL_Foto1) | **Nombre 1** | [LinkedIn](https://www.linkedin.com/in/perfil1) | [GitHub](https://github.com/perfil1) |
-| ![Foto](URL_Foto2) | **Nombre 2** | [LinkedIn](https://www.linkedin.com/in/perfil2) | [GitHub](https://github.com/perfil2) |
-| ![Foto](URL_Foto2) | **Nombre 3** | [LinkedIn](https://www.linkedin.com/in/perfil2) | [GitHub](https://github.com/perfil2) |
+| Nombre               | LinkedIn                                                                                  | GitHub                                                                     |
+|----------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| **Benjamín Carias**  | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil1) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil1) |
+| **Nolis Maldonado**  | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil2) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil2) |
+| **Camila Ikkert**    | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/camila-milena-ikkert/) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/CamilaMilenaIkkert) |
 
 ### Backend
-| Foto | Nombre | LinkedIn | GitHub |
-| --- | --- | --- | --- |
-| ![Foto](URL_Foto3) | **Nombre 3** | [LinkedIn](https://www.linkedin.com/in/perfil3) | [GitHub](https://github.com/perfil3) |
-| ![Foto](URL_Foto4) | **Nombre 4** | [LinkedIn](https://www.linkedin.com/in/perfil4) | [GitHub](https://github.com/perfil4) |
-| ![Foto](URL_Foto4) | **Nombre 5** | [LinkedIn](https://www.linkedin.com/in/perfil4) | [GitHub](https://github.com/perfil4) |
-| ![Foto](URL_Foto4) | **Nombre 6** | [LinkedIn](https://www.linkedin.com/in/perfil4) | [GitHub](https://github.com/perfil4) |
+| Nombre                 | LinkedIn                                                                                  | GitHub                                                                     |
+|------------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| **Camila Battagliotti**| [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil3) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil3) |
+| **Genaro Cura**        | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil4) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil4) |
+| **Hur Fernández**      | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil4) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil4) |
+| **Sofia Ferrer**       | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil4) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil4) |
 
 ### Diseño (UX/UI)
-| Foto | Nombre | LinkedIn | GitHub |
-| --- | --- | --- | --- |
-| ![Foto](URL_Foto5) | **Nombre 7** | [LinkedIn](https://www.linkedin.com/in/perfil5) | [GitHub](https://github.com/perfil5) |
-| ![Foto](URL_Foto5) | **Nombre 8** | [LinkedIn](https://www.linkedin.com/in/perfil5) | [GitHub](https://github.com/perfil5) |
+| Nombre                | LinkedIn                                                                                  | GitHub                                                                     |
+|-----------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| **Laura González**    | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil5) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil5) |
+| **Angie Lorena**      | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil5) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil5) |
 
 ### Project Manager
-| Foto | Nombre | LinkedIn | GitHub |
-| --- | --- | --- | --- |
-| ![Foto](URL_Foto6) | **Nombre 9** | [LinkedIn](https://www.linkedin.com/in/perfil6) | [GitHub](https://github.com/perfil6) |
+| Nombre           | LinkedIn                                                                                  | GitHub                                                                     |
+|------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| **Sofia Ferrer** | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil6) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil6) |
 
 ### Testers
-| Foto | Nombre | LinkedIn | GitHub |
-| --- | --- | --- | --- |
-| ![Foto](URL_Foto7) | **Nombre 10** | [LinkedIn](https://www.linkedin.com/in/perfil7) | [GitHub](https://github.com/perfil7) |
-
-
-
-<!-- AGRADECIMIENTOS -->
-## Agradecimientos
+| Nombre                 | LinkedIn                                                                                  | GitHub                                                                     |
+|------------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| **Adriana López**      | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil7) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil7) |
+| **Camila Battagliotti**| [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil7) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil7) |
 
 
 
@@ -97,7 +96,19 @@ A continuación, se detallan las herramientas y lenguajes empleados en el desarr
 [React-url]: https://reactjs.org/
 [TailwindCSS.com]: https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white]
 [TailwindCSS-url]: https://tailwindcss.com
-[MySQL.com]: https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white]
-[MySQL-url]: https://www.mysql.com/
+[TypeScript.com]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
+[TypeScript-url]: https://www.typescriptlang.org/
+[Node.js]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node-dot-js&logoColor=white
+[Node-url]: https://nodejs.org/
+[Express.js]: https://img.shields.io/badge/Express.js-404D59?style=for-the-badge
+[Express-url]: https://expressjs.com/
+[PostgreSQL.com]: https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white
+[PostgreSQL-url]: https://www.postgresql.org/
+[Sequelize.com]: https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white
+[Sequelize-url]: https://sequelize.org/
+[SwaggerUI.com]: https://img.shields.io/badge/Swagger_UI-85EA2D?style=for-the-badge&logo=swagger&logoColor=black
+[SwaggerUI-url]: https://swagger.io/tools/swagger-ui/
+[JWT.io]: https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white
+[JWT-url]: https://jwt.io/
 
 
