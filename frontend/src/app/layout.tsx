@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 
 
 export const metadata: Metadata = {
-  title: "Tierra y Alma",
+  title: "Ecommerce",
   description: "by c21-43-t-node-react",
 };
 
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="en">
       <body className="flex flex-col min-h-screen">
         <Header/>
         <main className="flex-grow">{children}</main>

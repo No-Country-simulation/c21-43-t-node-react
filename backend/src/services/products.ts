@@ -2,16 +2,67 @@ import Category from "../models/categories";
 import Product from "../models/products";
 import { productData } from "../types/type";
 import { Op } from "sequelize";
+import { validateUpdateProduct, validateProduct } from "../schemas/products";
 
 class ProductService {
-  static async getAllProducts() {
+  static async getAllProducts(page: number = 1, limit: number = 5) {
     try {
-      const products = await Product.findAll({
+      const offset = (page - 1) * limit;
+
+      const { count, rows } = await Product.findAndCountAll({
+        limit: limit,
+        offset: offset,
         include: {
           model: Category,
           attributes: ["id", "name"],
           through: { attributes: [] },
         },
+      });
+
+      return {
+        products: rows,
+        currentPage: page,
+        totalProducts: count,
+        totalPages: Math.ceil(count / limit),
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getProductByName(data: string) {
+    try {
+      const product = await Product.findAndCountAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${data}%`,
+          },
+        },
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "name"],
+            through: { attributes: [] },
+          },
+        ],
+      });
+      return product;
+    } catch (error) {
+      throw new Error("Hubo un problema al buscar el producto.");
+    }
+  }
+
+  static async getProductsByCategory(categoryId: string) {
+    try {
+      const products = await Product.findAll({
+        include: [
+          {
+            model: Category,
+            where: { id: categoryId },
+            attributes: ["id", "name"],
+            through: { attributes: [] },
+          },
+        ],
       });
       return products;
     } catch (error) {
@@ -19,24 +70,18 @@ class ProductService {
     }
   }
 
-  static async getProductByName(data:string){
+  static async getProductsByPriceRange(minPrice: number, maxPrice: number) {
     try {
-      const product = await Product.findAndCountAll({
-        where:{
-          name:{
-            [Op.iLike]: `%${data}%`
-          }
+      const products = await Product.findAll({
+        where: {
+          price: {
+            [Op.between]: [minPrice, maxPrice],
+          },
         },
-        include:[
-          {model:Category,
-            attributes:["id","name"],
-            through:{attributes:[]}
-          }
-        ]
       });
-      return product
+      return products;
     } catch (error) {
-      throw new Error('Hubo un problema al buscar el producto.');
+      throw error;
     }
   }
 
@@ -57,12 +102,27 @@ class ProductService {
 
   static async createProduct(data: productData) {
     try {
+      const validationResult = validateProduct(data);
+
+      if (!validationResult.success) {
+        // Si la validación falla, arroja un error con los mensajes de validación
+        const errorMessages = validationResult.error.errors
+          .map((err) => err.message)
+          .join(". ");
+        throw new Error(
+          `Datos de creación de producto inválidos: ${errorMessages}`
+        );
+      }
+
+      // Obtener los datos validados
+      const validData = validationResult.data;
+
       const product = await Product.create({
-        name: data.name,
-        description: data.description,
-        price: data.price,
-        image: data.image,
-        stock: data.stock,
+        name: validData.name,
+        description: validData.description,
+        price: validData.price,
+        image: validData.image,
+        stock: validData.stock,
       });
       await (product as any).addCategories(data.categoryId);
       return product;
@@ -71,17 +131,16 @@ class ProductService {
     }
   }
 
-  static async deleteProduct(id:string) {
+  static async deleteProduct(id: string) {
     try {
-        const product = await Product.findByPk(id);
-        if(!product){
-            throw new Error("El producto no existe")
-        }
+      const product = await Product.findByPk(id);
+      if (!product) {
+        throw new Error("El producto no existe");
+      }
 
       const deleteProduct = await product.destroy();
 
-      
-      return deleteProduct
+      return deleteProduct;
     } catch (error) {
       throw new Error(`Error al borrar el producto: ${error}`);
     }
@@ -89,31 +148,41 @@ class ProductService {
 
   static async updateProduct(id: string, data: Partial<productData>) {
     try {
+      const validationResult = validateUpdateProduct(data);
+
+      if (!validationResult.success) {
+        const errorMessages = validationResult.error.errors
+          .map((err) => err.message)
+          .join(". ");
+        throw new Error(`Datos de actualización inválidos: ${errorMessages}`);
+      }
+
+      const validData = validationResult.data;
+
       const product = await Product.findByPk(id);
       if (!product) {
         throw new Error("El producto no existe");
       }
-      
-      await product.update(data);
 
-      if(data.categoryId){
+      await product.update(validData);
+
+      if (data.categoryId) {
         await (product as any).setCategories(data.categoryId);
       }
 
-      const updatedProduct = await Product.findByPk(id,{
-        include:{
+      const updatedProduct = await Product.findByPk(id, {
+        include: {
           model: Category,
-          attributes:["id","name"],
-          through:{attributes:[]},
-        }
-      })
+          attributes: ["id", "name"],
+          through: { attributes: [] },
+        },
+      });
 
       return updatedProduct;
     } catch (error) {
       throw new Error(`Error al actualizar el producto: ${error}`);
     }
   }
-
 }
 
 export default ProductService;
