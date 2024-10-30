@@ -55,8 +55,8 @@ A continuación, se detallan las herramientas y lenguajes empleados en el desarr
 ### Frontend
 | Nombre               | LinkedIn                                                                                  | GitHub                                                                     |
 |----------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| **Benjamín Carias**  | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil1) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil1) |
-| **Nolis Maldonado**  | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/perfil2) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil2) |
+| **Benjamín Carias**  | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/devbenja/) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/devbenja) |
+| **Nolis Maldonado**  | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nolis-maldonado/) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/perfil2) |
 | **Camila Ikkert**    | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/camila-milena-ikkert/) | [![GitHub](https://img.shields.io/badge/-GitHub-333?logo=github&logoColor=white)](https://github.com/CamilaMilenaIkkert) |
 
 ### Backend
