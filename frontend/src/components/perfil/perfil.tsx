@@ -12,7 +12,6 @@ interface Producto {
 
 export const Perfil: React.FC = () => {
     const usuario = useStore((state) => state.usuario);
-    console.log(usuario)
 
 
     if (!usuario) {
@@ -24,8 +23,8 @@ export const Perfil: React.FC = () => {
             backgroundImage: `url('/fondoPerfil1.avif')`,
         }}>
 
-            <div className="max-w-4xl mx-auto p-8   bg-[#f27405d8] text-orange-200 flex justify-center content-center">
-                <div className="p-10 rounded-lg shadow-md  mb-6">
+            <div className="max-w-4xl mx-auto p-8   bg-[#ff8e42] text-[#260A03] flex justify-center content-center">
+                <div className="p-10 rounded-lg shadow-lg  mb-6">
                     <h2 className="text-xl font-bold mb-2">Perfil de Usuario</h2>
                     <p><strong>Nombre:</strong> {usuario.user.name}</p>
                     <p><strong>Apellido:</strong> {usuario.user.lastName}</p>

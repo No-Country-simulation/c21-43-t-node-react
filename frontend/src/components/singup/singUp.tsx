@@ -176,7 +176,7 @@ export const Signup = () => {
 
                     <button
                         type="submit"
-                        className="col-span-2 w-full bg-[#f27405] text-white p-2 rounded-md hover:bg-orange-700 transition"
+                        className="col-span-2 w-full bg-[#FF8E42] text-[#260A03] p-2 rounded-md hover:bg-[#F2CB05] transition"
                     >
                         Registrarme
                     </button>
