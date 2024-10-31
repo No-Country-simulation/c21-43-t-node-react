@@ -2,9 +2,22 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { jwtDecode } from 'jwt-decode'
 
+interface Usuario {
+    user: {
+        id: string;
+        name: string;
+        lastName: string;
+        email: string;
+
+    }
+}
+
 interface Store {
     token: string;
+    usuario: Usuario | null;
     setToken: (value: string) => void;
+    setUsuario: (datosUsuario: Usuario) => void;
+    limpiarUsuario: () => void;
     getUserId: () => string | null;
 }
 
@@ -16,7 +29,11 @@ export const useStore = create<Store>()(
     persist(
         (set, get) => ({
             token: '',
+
+            usuario: null,
             setToken: (value) => set({ token: value }),
+            setUsuario: (datosUsuario) => set({ usuario: datosUsuario }),
+            limpiarUsuario: () => set({ usuario: null }),
             getUserId: () => {
                 const token = get().token;
                 if (!token) return null;
@@ -28,6 +45,7 @@ export const useStore = create<Store>()(
                     return null;
                 }
             },
+
         }),
         { name: 'Store' }
     )

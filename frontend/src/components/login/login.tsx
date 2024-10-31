@@ -8,6 +8,7 @@ import { useStore } from "@/store/Store";
 export const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const setUsuario = useStore((state) => state.setUsuario);
     const setToken = useStore((state) => state.setToken)
 
     const router = useRouter();
@@ -21,13 +22,14 @@ export const Login = () => {
         }
         try {
 
-            //const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/login', userData);
-            const response = await axios.post('http://localhost:3000/auth/login', userData);
+            const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/login', userData);
+            // const response = await axios.post('http://localhost:3000/auth/login', userData);
 
 
             console.log(response.data.data)
             if (response.status === 200) {
                 setToken(response.data.data.token)
+                setUsuario(response.data.data)
                 router.push('/product');
 
             }

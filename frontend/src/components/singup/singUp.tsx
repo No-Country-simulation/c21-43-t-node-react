@@ -11,6 +11,7 @@ export const Signup = () => {
     const [phoneNumber, setPhoneNumber] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const setUsuario = useStore((state) => state.setUsuario);
     const setToken = useStore((state) => state.setToken)
 
     const router = useRouter();
@@ -22,7 +23,7 @@ export const Signup = () => {
             console.log(userId);
 
             const response = await axios.post('http://localhost:3000/cart/create', { userId });
-    
+
             if (response.data.success) {
                 console.log('first');
                 console.log(response.data.message);
@@ -35,7 +36,7 @@ export const Signup = () => {
         }
 
     }
-    
+
 
     const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -57,15 +58,18 @@ export const Signup = () => {
 
         try {
 
-            
-            //const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/register', userData);
-            const response = await axios.post('http://localhost:3000/auth/register', userData);
+
+            const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/register', userData);
+            // const response = await axios.post('http://localhost:3000/auth/register', userData);
 
             if (response.status === 200) {
 
+                setUsuario(response.data.data)
+                setToken(response.data.data.token)
+
+
                 await createCart(response.data.data.user.id);
 
-                setToken(response.data.data.token)
                 router.push('/product');
 
             }
