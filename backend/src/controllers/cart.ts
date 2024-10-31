@@ -1,7 +1,6 @@
 import CartService from "../services/cart";
 import { Request,Response,NextFunction } from "express";
 import { cartData } from "../types/type";
-import { cartData } from "../types/type";
 
 
 class CartController{
