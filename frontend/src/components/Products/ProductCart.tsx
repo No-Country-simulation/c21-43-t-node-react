@@ -31,7 +31,7 @@ export const ProductCart = ({ products }: { products: Cart[] }) => {
 
     return (
         <div className="container mx-auto p-4 mb-4">
-            <h1 className="text-3xl mb-5">Carrito de Compras</h1>
+            <h2 className="text-3xl mb-5">Carrito de Compras</h2>
             <div className="grid md:grid-cols-3 gap-6">
                 <Card className="md:col-span-2">
                     <CardHeader>

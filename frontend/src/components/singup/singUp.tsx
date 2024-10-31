@@ -20,11 +20,11 @@ export const Signup = () => {
 
         try {
 
-            console.log(userId);
-
             const response = await axios.post('http://localhost:3000/cart/create', { userId });
 
-            if (response.data.success) {
+            console.log('response create cart', response);
+
+            if (response.status == 200) {
                 console.log('first');
                 console.log(response.data.message);
             } else {
@@ -59,8 +59,8 @@ export const Signup = () => {
         try {
 
 
-            const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/register', userData);
-            // const response = await axios.post('http://localhost:3000/auth/register', userData);
+            //const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/register', userData);
+            const response = await axios.post('http://localhost:3000/auth/register', userData);
 
             if (response.status === 200) {
 
@@ -143,6 +143,7 @@ export const Signup = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required
+                            autoComplete="username"
                         />
                     </div>
 
@@ -157,6 +158,7 @@ export const Signup = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required
+                            autoComplete="new-passeword"
                         />
                     </div>
 
@@ -170,6 +172,7 @@ export const Signup = () => {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            autoComplete="new-password"
                             required
                         />
                     </div>

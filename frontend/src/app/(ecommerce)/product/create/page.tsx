@@ -57,7 +57,7 @@ export default function page() {
 
                 //const response = await axios.get('https://c21-43-t-node-react-production-227f.up.railway.app/category');
                 const response = await axios.get('http://localhost:3000/category');
-                setCategories(response.data.data);
+                setCategories(response.data.data || []);
 
             } catch (error) {
 
