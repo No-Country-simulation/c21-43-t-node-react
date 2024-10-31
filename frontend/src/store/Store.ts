@@ -8,6 +8,7 @@ interface Usuario {
         name: string;
         lastName: string;
         email: string;
+        registrationType: string | null;
 
     }
 }

@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Category } from "@/interfaces";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { X } from "lucide-react";
+import { useStore } from "@/store/Store";
 
 interface Product {
     id: string;
@@ -29,6 +30,8 @@ const Page = () => {
     const [minPrice, setMinPrice] = useState("");
     const [maxPrice, setMaxPrice] = useState("");
     const [categoryFilter, setCategoryFilter] = useState("");
+    const usuario = useStore((state) => state.usuario);
+    console.log('usuario product', usuario)
 
     const { toast } = useToast();
 
@@ -165,9 +168,16 @@ const Page = () => {
         <div className="flex flex-col container p-4 mx-auto min-h-screen">
             <div className="flex flex-row justify-center items-center md:justify-between mb-5">
                 <h3 className="text-3xl pb-0.5 flex-1">Productos</h3>
-                <Link href="/product/create">
-                    <Button className="bg-[#f27405d8] w-full md:w-auto hover:bg-[#595302]">Crear Producto</Button>
-                </Link>
+                {
+                    usuario?.user?.registrationType === "Seller" || usuario?.user?.registrationType === "Admin" ?
+                        <Link href="/product/create">
+                            <Button className="bg-[#ff8e42] text-[#260A03] hover:bg-[#F2CB05] w-full md:w-auto ">Crear Producto</Button>
+                        </Link>
+                        :
+                        <></>
+
+                }
+
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
                 <aside className="sm:w-1/4">
@@ -235,7 +245,7 @@ const Page = () => {
 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 flex-grow">
                     {products?.map((product) => (
-                        <Card key={product.id} className="w-full">
+                        <Card key={product.id} className="w-full border border-gray-600">
                             <CardHeader>
                                 <CardTitle>{product.name}</CardTitle>
                             </CardHeader>
@@ -255,28 +265,35 @@ const Page = () => {
                                     </div>
                                 </CardContent>
                             </Link>
-                            <CardFooter className="flex flex-row items-center justify-between">
-                                <Link href={`/product/${product.id}/update`}>
-                                    <Button variant="default">Editar</Button>
-                                </Link>
-                                <AlertDialog>
-                                    <AlertDialogTrigger>
-                                        <Button variant="destructive">Eliminar</Button>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>
-                                            <AlertDialogTitle>¿Estás seguro de eliminar este producto?</AlertDialogTitle>
-                                            <AlertDialogDescription>
-                                                Una vez borrado, el producto ya no estará en la tienda.
-                                            </AlertDialogDescription>
-                                        </AlertDialogHeader>
-                                        <AlertDialogFooter>
-                                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                            <AlertDialogAction onClick={() => deleteProducts(product.id)}>Continuar</AlertDialogAction>
-                                        </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                </AlertDialog>
-                            </CardFooter>
+                            {
+                                usuario?.user?.registrationType === "Seller" || usuario?.user?.registrationType === "Admin" ?
+
+
+                                    <CardFooter className="flex flex-row items-center justify-between">
+                                        <Link href={`/product/${product.id}/update`}>
+                                            <Button variant="default">Editar</Button>
+                                        </Link>
+                                        <AlertDialog>
+                                            <AlertDialogTrigger>
+                                                <Button variant="destructive">Eliminar</Button>
+                                            </AlertDialogTrigger>
+                                            <AlertDialogContent>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>¿Estás seguro de eliminar este producto?</AlertDialogTitle>
+                                                    <AlertDialogDescription>
+                                                        Una vez borrado, el producto ya no estará en la tienda.
+                                                    </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                                    <AlertDialogAction onClick={() => deleteProducts(product.id)}>Continuar</AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
+                                    </CardFooter>
+                                    :
+                                    <></>
+                            }
                         </Card>
                     ))}
                 </div>
