@@ -19,6 +19,10 @@
       "description": "E-commerce de productos artesanales"
     },
     {
+      "name": "auth",
+      "description": "Auth operations"
+    },
+    {
       "name": "user",
       "description": "Operations about user"
     },
@@ -28,7 +32,11 @@
     },
     {
       "name": "category",
-      "description": "Category CRUD"
+      "description": "Categories CRUD"
+    },
+    {
+      "name": "order",
+      "description": "Orders CRUD"
     },
     {
       "name": "cart",
@@ -36,72 +44,270 @@
     }
   ],
   "paths": {
-    "/products": {
-      "get": {
+    "/auth/register": {
+      "post": {
         "tags": [
-          "product"
+          "auth"
         ],
-        "summary": "Returns all store products",
-        "description": "",
-        "operationId": "getAll",
+        "summary": "Register new user",
+        "description": "Creates a new user and an associated auth record in the database.",
+        "operationId": "registerUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "User registered successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "integer",
-                    "format": "int32"
-                  }
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict: User already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
           },
           "500": {
-            "description": "Api error"
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
-        },
-        "security": [
-          {
-            "api_key": []
-          }
-        ]
-      },
+        }
+      }
+    },
+    "/auth/login": {
       "post": {
         "tags": [
-          "product"
+          "auth"
         ],
-        "summary": "Create / upload a product",
-        "description": "Place a new product in the store",
-        "operationId": "create",
+        "summary": "User login",
+        "description": "Allows a user to log in by providing email and password. Returns a JWT token for future authenticated requests.",
+        "operationId": "loginUser",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Product"
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid email/password supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Incorrect password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "User logout",
+        "description": "Invalidates the JWT token by adding it to a blacklist.",
+        "operationId": "logoutUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logout successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized: Token is missing or invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get a list of users",
+        "description": "This can only be done by a superadmin.",
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden: You are not authorized to view this resource."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create a new user",
+        "description": "This can be done during user registration.",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "User object to be created",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/Product"
+                "$ref": "#/components/schemas/User"
               }
             },
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/Product"
+                "$ref": "#/components/schemas/User"
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "created",
+            "description": "User successfully created",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
@@ -110,7 +316,230 @@
             "description": "Invalid input"
           },
           "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Find user by ID",
+        "description": "Retrieve a single user by their unique ID",
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user that needs to be fetched",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update user by ID",
+        "description": "Modify the data of an existing user",
+        "operationId": "updateUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User data to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data or user ID"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete user by ID",
+        "description": "Remove a user by their unique ID",
+        "operationId": "deleteUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully deleted"
+          },
+          "400": {
+            "description": "Invalid user ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Returns a paginated list of products",
+        "description": "Retrieve a list of products with pagination options",
+        "operationId": "getAllProducts",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to retrieve",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 5,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
             "description": "Api error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Create / upload a product",
+        "description": "Allows authenticated users to add a new product to the store.",
+        "operationId": "createProduct",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Product object that needs to be added to the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Product successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized - Bearer token required"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -121,30 +550,26 @@
           "product"
         ],
         "summary": "Find product by ID",
-        "description": "",
+        "description": "Retrieve a product by its ID",
         "operationId": "getProductById",
         "parameters": [
           {
-            "name": "orderId",
+            "name": "productId",
             "in": "path",
-            "description": "ID of order that needs to be fetched",
+            "description": "ID of the product that needs to be fetched",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string",
+              "format": "uuid",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "Product successfully retrieved",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Product"
-                }
-              },
-              "application/xml": {
                 "schema": {
                   "$ref": "#/components/schemas/Product"
                 }
@@ -163,22 +588,30 @@
         "tags": [
           "product"
         ],
-        "summary": "Update product",
-        "description": "Modify one product",
-        "operationId": "update",
+        "summary": "Update product by ID",
+        "description": "Update the details of an existing product",
+        "operationId": "updateProduct",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "ID of the product to be updated",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Product"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/Product"
-              }
-            },
-            "application/x-www-form-urlencoded": {
               "schema": {
                 "$ref": "#/components/schemas/Product"
               }
@@ -187,7 +620,7 @@
         },
         "responses": {
           "200": {
-            "description": "updated",
+            "description": "Product updated successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -199,8 +632,14 @@
           "400": {
             "description": "Invalid input"
           },
+          "401": {
+            "description": "Unauthorized - Bearer token required"
+          },
+          "404": {
+            "description": "Product not found"
+          },
           "500": {
-            "description": "Api error"
+            "description": "Internal server error"
           }
         }
       },
@@ -208,318 +647,403 @@
         "tags": [
           "product"
         ],
-        "summary": "Delete Product by ID",
-        "description": "",
+        "summary": "Delete product by ID",
+        "description": "Delete an existing product from the store",
         "operationId": "deleteProduct",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
-            "name": "ProductId",
+            "name": "productId",
             "in": "path",
-            "description": "ID of the Product that needs to be deleted",
+            "description": "ID of the product that needs to be deleted",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string",
+              "format": "uuid",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Product successfully deleted"
+          },
           "400": {
             "description": "Invalid ID supplied"
           },
+          "401": {
+            "description": "Unauthorized - Bearer token required"
+          },
           "404": {
-            "description": "Order not found"
+            "description": "Product not found"
           }
         }
       }
     },
-    "/users": {
+    "/products/byCategory": {
       "get": {
         "tags": [
-          "user"
+          "product"
         ],
-        "summary": "Get a list of users",
-        "description": "This can only be done by superadmin.",
-        "operationId": "getAllUsers",
-        "requestBody": {
-          "description": "List of users",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
+        "summary": "Retrieve products by category",
+        "description": "Fetches all products that belong to a specific category",
+        "operationId": "getProductsByCategory",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "ID of the category to filter products by",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "46846546"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserArray"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserArray"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid category ID supplied"
+          },
+          "404": {
+            "description": "Category or products not found"
+          },
+          "500": {
+            "description": "API error"
           }
         }
       }
     },
-    "/users/create": {
+    "/products/search": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Retrieve products by name",
+        "description": "Fetches products that match a specific name",
+        "operationId": "getProductsByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the product to filter by",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bolso de yute"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid name parameter supplied"
+          },
+          "404": {
+            "description": "Product not found"
+          },
+          "500": {
+            "description": "API error"
+          }
+        }
+      }
+    },
+    "/products/byPriceRange": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Retrieve products by price range",
+        "description": "Fetches products within a specific price range",
+        "operationId": "getProductsByPriceRange",
+        "parameters": [
+          {
+            "name": "minPrice",
+            "in": "query",
+            "description": "Minimum price for the product filter",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1000
+            }
+          },
+          {
+            "name": "maxPrice",
+            "in": "query",
+            "description": "Maximum price for the product filter",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 5000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid price range parameters"
+          },
+          "404": {
+            "description": "No products found in the specified price range"
+          },
+          "500": {
+            "description": "API error"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": [
+          "category"
+        ],
+        "summary": "Get all categories",
+        "description": "Returns a list of all categories in the store",
+        "operationId": "getAllCategories",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
       "post": {
         "tags": [
-          "user"
+          "category"
         ],
-        "summary": "Create user",
-        "description": "This can only be done by user regristation.",
-        "operationId": "createUser",
+        "summary": "Create a new category",
+        "description": "Adds a new category to the store",
+        "operationId": "createCategory",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
-          "description": "Created user object",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Category"
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "successful operation CREATED",
+            "description": "Category created successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/login": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Logs user into the system",
-        "description": "",
-        "operationId": "loginUser",
-        "parameters": [
-          {
-            "name": "username",
-            "in": "query",
-            "description": "The user name for login",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "description": "The password for login in clear text",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "headers": {
-              "X-Rate-Limit": {
-                "description": "calls per hour allowed by the user",
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "X-Expires-After": {
-                "description": "date in UTC when token expires",
-                "schema": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            },
-            "content": {
-              "application/xml": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Category"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid username/password supplied"
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized - Bearer token required"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     },
-    "/auth/logout": {
+    "/categories/{categoryId}": {
       "get": {
         "tags": [
-          "user"
+          "category"
         ],
-        "summary": "Logs out current logged in user session",
-        "description": "",
-        "operationId": "logoutUser",
-        "parameters": [],
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      }
-    },
-    "/auth/register": {
-      "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Get user by user name",
-        "description": "",
-        "operationId": "getUserByName",
+        "summary": "Get category by ID",
+        "description": "Retrieve a single category by its ID",
+        "operationId": "getCategoryById",
         "parameters": [
           {
-            "name": "username",
+            "name": "categoryId",
             "in": "path",
-            "description": "The name that needs to be fetched. Use user1 for testing. ",
+            "description": "ID of the category to retrieve",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/Category"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid username supplied"
+            "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "User not found"
+            "description": "Category not found"
           }
         }
       },
-      "put": {
+      "patch": {
         "tags": [
-          "user"
+          "category"
         ],
-        "summary": "Update user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "updateUser",
+        "summary": "Update category by ID",
+        "description": "Update an existing category",
+        "operationId": "updateCategory",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
-            "name": "username",
+            "name": "categoryId",
             "in": "path",
-            "description": "name that need to be deleted",
+            "description": "ID of the category to update",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
             }
           }
         ],
         "requestBody": {
-          "description": "Update an existent user in the store",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/x-www-form-urlencoded": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/Category"
               }
             }
           }
         },
         "responses": {
-          "default": {
-            "description": "successful operation"
+          "200": {
+            "description": "Category updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized - Bearer token required"
+          },
+          "404": {
+            "description": "Category not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
       "delete": {
         "tags": [
-          "user"
+          "category"
         ],
-        "summary": "Delete user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "deleteUser",
+        "summary": "Delete category by ID",
+        "description": "Delete a category from the store",
+        "operationId": "deleteCategory",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
-            "name": "username",
+            "name": "categoryId",
             "in": "path",
-            "description": "The name that needs to be deleted",
+            "description": "ID of the category to delete",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Category deleted successfully"
+          },
           "400": {
-            "description": "Invalid username supplied"
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Unauthorized - Bearer token required"
           },
           "404": {
-            "description": "User not found"
+            "description": "Category not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -540,6 +1064,12 @@
             "description": "Product name",
             "example": "Bolso de yute"
           },
+          "category": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Product category ID",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
           "description": {
             "type": "string",
             "description": "Product description",
@@ -548,21 +1078,29 @@
           "price": {
             "type": "integer",
             "format": "int32",
+            "description": "Price of the product",
             "example": 7000
           },
           "image": {
             "type": "string",
-            "description": "Product image",
+            "description": "URL of the product image",
             "example": "https://http2.mlstatic.com/D_NQ_NP_796331-MLA50990318692_082022-O.webp"
           },
           "stock": {
             "type": "integer",
             "format": "int32",
+            "description": "Available stock of the product",
             "example": 7
           }
         },
+        "required": [
+          "name",
+          "category",
+          "price",
+          "stock"
+        ],
         "xml": {
-          "name": "product"
+          "name": "Product"
         }
       },
       "Category": {
@@ -575,7 +1113,8 @@
           },
           "name": {
             "type": "string",
-            "example": "Madera"
+            "description": "Category name",
+            "example": "Accesorios"
           }
         },
         "xml": {
@@ -621,6 +1160,90 @@
           "name": "user"
         }
       },
+      "RegisterRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for the user.",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "name": {
+            "type": "string",
+            "description": "First name of the user.",
+            "example": "Francisco"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the user.",
+            "example": "James"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Phone number of the user.",
+            "example": "12345"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address of the user.",
+            "example": "john@email.com"
+          },
+          "registrationType": {
+            "type": "string",
+            "description": "Type of registration (e.g., manual, social).",
+            "example": "Client"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password for the user account.",
+            "example": "securePassword123"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "lastName",
+          "phoneNumber",
+          "email",
+          "registrationType",
+          "password"
+        ]
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address.",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password.",
+            "example": "securePassword123"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "LogoutRequest": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "JWT token to be invalidated.",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
       "ApiResponse": {
         "type": "object",
         "properties": {
@@ -638,6 +1261,35 @@
         "xml": {
           "name": "##default"
         }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "JWT token for authentication."
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Error message detailing the issue."
+          },
+          "code": {
+            "type": "integer",
+            "description": "Error code representing the type of error."
+          }
+        },
+        "required": [
+          "message",
+          "code"
+        ]
       }
     },
     "requestBodies": {
@@ -652,6 +1304,21 @@
           "application/xml": {
             "schema": {
               "$ref": "#/components/schemas/Product"
+            }
+          }
+        }
+      },
+      "User": {
+        "description": "User object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
             }
           }
         }

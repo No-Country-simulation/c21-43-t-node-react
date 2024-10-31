@@ -1,39 +1,32 @@
-  import Auth from "../models/auth";
-  import { createSaltAndHash, UUID } from "../utils/createHash";
-  import { createToken } from "../utils/token";
-  import UsersService from "./users";
+import Auth from "../models/auth";
+import { createSaltAndHash, UUID } from "../utils/createHash";
+import { createToken } from "../utils/token";
+import UsersService from "./users";
+import { Error } from "../types/type";
+import { validateSignup, validateLogin } from "../schemas/auth";
 
-  class AuthService {
-    // static async register(data: any) {
-    //   try {
-    //     const { email } = data;
+class AuthService {
+  static async register(data: any) {
+    try {
+      // Valido los datos ingresados
+      const result = validateSignup(data);
 
-    //     let exist: boolean;
-    //     try {
-    //       await UsersService.getByEmail(email); //--esto devuelve un usuario..?
-    //       exist = true;
+      if (!result.success) {
+        //console.log(result.error, result.error.errors);
 
-    //       //se queda aca si encontro un usuario
-    //     } catch (error) {
-    //       exist = false;
-    //       //entra aca si no encontro ese usuario
-    //     }
-    //     if (exist) {
-    //       throw new Error("El usuario ya esta registrado");
-    //     }
-    //     const user = await UsersService.create(data);
-    //     const userAuth = await this.create(data); //chequear q no exista el email,
-    //   } catch (error) {
-    //     throw error;
-    //   }
-    // }
+        const errorMessages = result.error.errors
+          .map((err) => err.message)
+          .join(". ");
+        const error: any = new Error(
+          `Los datos ingresados son inválidos: ${errorMessages}`
+        );
+        error["statusCode"] = 400;
 
-    static async register(data: any) {
-      //console.log("entre al registro con", data);
+        throw error;
+      }
 
-      try {
-        const { email, name, lastName, phoneNumber, password, registrationType } =
-          data;
+      const { email, name, lastName, phoneNumber, password, registrationType } =
+        result.data;
 
         // 1. Verificar si el email ya existe en la tabla de usuarios
         const existingUser = await UsersService.getByEmail(email);
@@ -56,13 +49,12 @@
         // 4. Hashear la contraseña usando tu función `createSaltAndHash`
         const hashedPassword = createSaltAndHash(password, salt);
 
-        // 5. Generar el token que contiene la información del rol
-        const token = createToken({
-          id: newUser.id,
-          email: newUser.email,
-          role: newUser.registrationType,
-        });
-        //console.log("hashed pass", hashedPassword);
+      // 5. Generar el token que contiene la información del rol
+      const token = createToken({
+        id: newUser.id,
+        email: newUser.email,
+        role: newUser.registrationType,
+      });
 
         // 6. Guardar el password hasheado y el id del usuario.
         const authRecord = await Auth.create({
@@ -81,20 +73,38 @@
       }
     }
 
-    static async login(data: any) {
-      try {
-        const { email, password } = data;
+  static async login(data: any) {
+    try {
+      // Valido los datos ingresados
+      const result = validateLogin(data);
+
+      if (!result.success) {
+        const errorMessages = result.error.errors
+          .map((err) => err.message)
+          .join(". ");
+        const error: any = new Error(
+          `Los datos ingresados son inválidos: ${errorMessages}`
+        );
+        error["statusCode"] = 400;
+
+        throw error;
+      }
+
+      const { email, password } = result.data;
 
         // Buscar usuario por su email
         const user: any = await UsersService.getByEmail(email);
 
-        if (!user) {
-          throw new Error("Usuario no encontrado");
+      if (!user) {
+        {
+          const error: any = new Error("Usuario no encontrado");
+          error["statusCode"] = 404;
+          throw error;
         }
+      }
 
-        // Buscar las credenciales del usuario en la tabla 'Auth'
-        const userAuth: any = await Auth.findOne({ where: { userId: user.id } });
-        //console.log("el userid es:", user.id);
+      // Buscar las credenciales del usuario en la tabla 'Auth'
+      const userAuth: any = await Auth.findOne({ where: { userId: user.id } });
 
         if (!userAuth) {
           throw new Error("No se encontraron credenciales asociadas al usuario");
@@ -111,27 +121,14 @@
           // Si coinciden, generar un nuevo token
           const token = createToken({ id: user.id, role: user.registrationType });
 
-          return { message: "Login exitoso", token };
-        } else {
-          throw new Error("Contraseña incorrecta");
-        }
-      } catch (error) {
-        throw error;
+        return { message: "Login exitoso", token, user: user };
+      } else {
+        throw new Error("Contraseña incorrecta");
       }
-      // const { password, email } = data;
-
-      // const user: any = await UsersService.getByEmail(email);
-
-      // const [salt, hash] = user.password.split(":");
-
-      // if (createSaltAndHash(password, salt) == user.password) {
-      //   const token = createToken({ id: user.id });
-
-      //   // res.status(200).json({ message: "login exitoso", token });
-      // } else {
-      //   //res.status(401).json({ message: "contraseña incorrecta" });
-      // }
+    } catch (error) {
+      throw error;
     }
+  }
 
     // static async logout() {
     //   try {

@@ -1,6 +1,6 @@
 export interface categoryData {
-    id?:string;
-    name: string;
+  id?: string;
+  name: string;
 }
 
 
@@ -23,15 +23,19 @@ export interface orderData{
     totalAmount:number
 }
 
-
-export interface cartData{
-    id?:string,
-    status:string,
-    userId?:string
+export interface cartData {
+  id?: string;
+  status: string;
+  userId?: string;
 }
 
 interface CartDetailData{
     CartId: string;
     ProductId: string;
     quantity: number;
+}
+
+export interface Error {
+  message: string;
+  statusCode: number;
 }

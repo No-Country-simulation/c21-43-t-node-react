@@ -26,7 +26,7 @@ const User = sequelize.define("User", {
       notEmpty: { msg: "El apellido no puede estar vacío" },
       len: {
         args: [3, 15],
-        msg: "El nombre debe tener entre 3 y 15 caracteres",
+        msg: "El apellido debe tener entre 3 y 15 caracteres",
       },
     },
   },
