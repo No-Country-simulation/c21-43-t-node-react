@@ -32,7 +32,7 @@ export const createOrderPaymentController = async (req:Request, res:Response, ne
             },
             external_reference: cartId,
             auto_return: "approved", //Si se aprueba el pago, redirreciona al success automaticamente
-            notification_url:"https://5f82-190-244-39-67.ngrok-free.app/mercadoPago/webhook",// ACA VA IR EL DEPLOY
+            // notification_url:"https://5f82-190-244-39-67.ngrok-free.app/mercadoPago/webhook",// ACA VA IR EL DEPLOY
         }
 
         const preference = new Preference(client);
