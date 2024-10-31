@@ -22,8 +22,8 @@ export const Login = () => {
         }
         try {
 
-            const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/login', userData);
-            // const response = await axios.post('http://localhost:3000/auth/login', userData);
+            //const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/login', userData);
+            const response = await axios.post('http://localhost:3000/auth/login', userData);
 
 
             console.log(response.data.data)
@@ -58,6 +58,7 @@ export const Login = () => {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            autoComplete="username"
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required
                         />
@@ -72,6 +73,7 @@ export const Login = () => {
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            autoComplete="current-password"
                             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required
                         />

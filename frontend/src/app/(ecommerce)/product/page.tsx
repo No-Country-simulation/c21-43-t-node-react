@@ -36,8 +36,8 @@ const Page = () => {
 
         try {
 
-            const response = await axios.get("https://c21-43-t-node-react-production-227f.up.railway.app/products");
-            // const response = await axios.get("http://localhost:3000/products");
+            //const response = await axios.get("https://c21-43-t-node-react-production-227f.up.railway.app/products");
+            const response = await axios.get("http://localhost:3000/products");
 
             console.log(response)
             setProducts(response.data.products);
@@ -99,59 +99,102 @@ const Page = () => {
     }
 
     useEffect(() => {
-        fetchProducts();
-    }, [])
+
+        const applyFilters = async () => {
+
+            if (nameFilter) {
+                await fetchProductsByName(nameFilter);
+            } else if (minPrice && maxPrice) {
+                await fetchProductsByPriceRange(minPrice, maxPrice);
+            } else if (categoryFilter) {
+                await fetchProductsByCategory(categoryFilter);
+            } else {
+                await fetchProducts(); 
+            }
+
+        };
+
+        applyFilters();
+
+    }, [nameFilter, minPrice, maxPrice, categoryFilter]);
+
 
     useEffect(() => {
 
         const fetchCategories = async () => {
 
             try {
-
-                const response = await axios.get('https://c21-43-t-node-react-production-227f.up.railway.app/category');
-                // const response = await axios.get('http://localhost:3000/category');
+                const response = await axios.get('http://localhost:3000/category');
                 setCategories(response.data.data);
-
             } catch (error) {
-
                 console.error('Error al obtener las categorías:', error);
                 toast({
                     variant: 'destructive',
                     title: 'Error',
                     description: 'No se pudieron cargar las categorías',
                 });
-
             }
-
         };
 
         fetchCategories();
 
     }, []);
 
-    useEffect(() => {
-        if (nameFilter) {
-            fetchProductsByName(nameFilter);
-        } else {
-            fetchProducts();
-        }
-    }, [nameFilter]);
 
-    useEffect(() => {
-        if (minPrice && maxPrice) {
-            fetchProductsByPriceRange(minPrice, maxPrice);
-        } else {
-            fetchProducts();
-        }
-    }, [minPrice, maxPrice]);
+    // useEffect(() => {
+    //     fetchProducts();
+    // }, [])
 
-    useEffect(() => {
-        if (categoryFilter) {
-            fetchProductsByCategory(categoryFilter);
-        } else {
-            fetchProducts();
-        }
-    }, [categoryFilter]);
+    // useEffect(() => {
+
+    //     const fetchCategories = async () => {
+
+    //         try {
+
+    //             const response = await axios.get('https://c21-43-t-node-react-production-227f.up.railway.app/category');
+    //             // const response = await axios.get('http://localhost:3000/category');
+    //             setCategories(response.data.data);
+
+    //         } catch (error) {
+
+    //             console.error('Error al obtener las categorías:', error);
+    //             toast({
+    //                 variant: 'destructive',
+    //                 title: 'Error',
+    //                 description: 'No se pudieron cargar las categorías',
+    //             });
+
+    //         }
+
+    //     };
+
+    //     fetchCategories();
+
+    // }, []);
+
+    // useEffect(() => {
+    //     if (nameFilter) {
+    //         fetchProductsByName(nameFilter);
+    //     } else {
+    //         fetchProducts();
+    //     }
+    // }, [nameFilter]);
+
+    // useEffect(() => {
+    //     if (minPrice && maxPrice) {
+    //         fetchProductsByPriceRange(minPrice, maxPrice);
+    //     } else {
+    //         fetchProducts();
+    //     }
+    // }, [minPrice, maxPrice]);
+
+    // useEffect(() => {
+    //     if (categoryFilter) {
+    //         fetchProductsByCategory(categoryFilter);
+    //     } else {
+    //         fetchProducts();
+    //     }
+    // }, [categoryFilter]);
 
     const clearFilters = () => {
         setNameFilter("");
@@ -166,20 +209,20 @@ const Page = () => {
             <div className="flex flex-row justify-center items-center md:justify-between mb-5">
                 <h3 className="text-3xl pb-0.5 flex-1">Productos</h3>
                 <Link href="/product/create">
-                    <Button className="bg-[#f27405d8] w-full md:w-auto hover:bg-[#595302]">Crear Producto</Button>
+                    <Button className="bg-[#FF8E42] w-full md:w-auto hover:bg-[#260A03]">Crear Producto</Button>
                 </Link>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
                 <aside className="sm:w-1/4">
                     <div className="flex flex-row items-center justify-between mb-4">
                         <h4 className="text-xl font-semibold text-gray-700">Filtrar Productos</h4>
-                        <button
-                            className="ml-2 p-1 text-gray-500 hover:text-gray-700 focus:outline-none"
+                        <span
+                            className="ml-2 p-1 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer"
                             aria-label="Clear filters"
                             onClick={clearFilters}
                         >
                             <X size={20} />
-                        </button>
+                        </span>
                     </div>
 
                     <div className="mb-4">
@@ -235,7 +278,7 @@ const Page = () => {
 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 flex-grow">
                     {products?.map((product) => (
-                        <Card key={product.id} className="w-full">
+                        <Card key={product.id} className="w-full cursor-pointer transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg">
                             <CardHeader>
                                 <CardTitle>{product.name}</CardTitle>
                             </CardHeader>
@@ -260,7 +303,7 @@ const Page = () => {
                                     <Button variant="default">Editar</Button>
                                 </Link>
                                 <AlertDialog>
-                                    <AlertDialogTrigger>
+                                    <AlertDialogTrigger asChild>
                                         <Button variant="destructive">Eliminar</Button>
                                     </AlertDialogTrigger>
                                     <AlertDialogContent>
