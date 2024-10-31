@@ -11,7 +11,7 @@ export interface productData{
     price:number,
     image:string,
     stock:number,
-    categoryId:string[]
+    categoryId:string[];
 }
 
 
@@ -31,7 +31,7 @@ export interface cartData{
 }
 
 interface CartDetailData{
-    CartId: number;
-    ProductId: number;
+    CartId: string;
+    ProductId: string;
     quantity: number;
 }

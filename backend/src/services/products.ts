@@ -57,6 +57,17 @@ class ProductService {
 
   static async createProduct(data: productData) {
     try {
+      const existingProduct = await Product.findOne({
+        where: {
+          name: data.name,
+        },
+      });
+  
+      if (existingProduct) {
+        throw new Error(`El producto con el nombre "${data.name}" ya existe.`);
+      }
+
+      
       const product = await Product.create({
         name: data.name,
         description: data.description,
@@ -64,6 +75,9 @@ class ProductService {
         image: data.image,
         stock: data.stock,
       });
+
+      
+
       await (product as any).addCategories(data.categoryId);
       return product;
     } catch (error) {

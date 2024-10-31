@@ -22,7 +22,6 @@
             }
         };
 
-
         static async getProductByName(req:Request,res:Response,next:NextFunction){
             const {name} = req.query;
             console.log("Consulta de nombre:", name);
