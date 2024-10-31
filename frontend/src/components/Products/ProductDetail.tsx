@@ -1,9 +1,17 @@
+"use client"
+
+import { useState } from "react";
 import { ShoppingCart, Star, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reviews, ProductDetailProps } from "@/interfaces";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "../ui/textarea";
+import Link from "next/link";
+import axios from "axios";
+
+import { useStore } from "@/store/Store";
+
 
 const reviewData: Reviews = {
     review: [
@@ -22,12 +30,40 @@ const reviewData: Reviews = {
             date: "2023-06-02"
         }
     ]
-}; 
+};
 
-export const ProductDetail = ({ product }: ProductDetailProps ) => {
+
+export const ProductDetail = ({ product }: ProductDetailProps) => {
 
     const price = parseFloat(product.price.toString());
     const reviews = reviewData.review;
+   
+    const { getUserId } = useStore();
+    const useruiid = getUserId();
+    const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
+
+    const handleAddToCart = async () => {
+
+        try {
+
+            const response = await axios.put("http://localhost:3000/cart/addToCart",
+                {
+                    userId: useruiid,
+                    productId: product.id,
+                    quantity: selectedQuantity,
+                }
+            );
+
+            console.log(response.data.message);
+            
+        } catch (error) {
+
+            console.error("Error al agregar al carrito:", error);
+
+        }
+
+    };
+
 
     return (
         <div className="container mx-auto px-5 py-8">
@@ -50,7 +86,7 @@ export const ProductDetail = ({ product }: ProductDetailProps ) => {
                     </div>
                     <div className="flex items-center gap-4 mb-6 mt-14">
                         <label htmlFor="quantity" className="font-medium">Cantidad:</label>
-                        <Select>
+                        <Select onValueChange={(value) => setSelectedQuantity(Number(value))}>
                             <SelectTrigger className="w-26">
                                 <SelectValue placeholder="Cantidad" />
                             </SelectTrigger>
@@ -62,9 +98,11 @@ export const ProductDetail = ({ product }: ProductDetailProps ) => {
                         </Select>
                     </div>
                     <div className="flex flex-wrap gap-4">
-                        <Button className="flex-1" disabled={product.stock === 0}>
-                            <ShoppingCart className="mr-2 h-4 w-4" />
-                            {product.stock > 0 ? 'Añadir al carrito' : 'Agotado'}
+                        <Button onClick={handleAddToCart} className="flex-1" disabled={product.stock === 0}>
+                            <Link href="/cart" className="flex items-center">
+                                <ShoppingCart className="mr-2 h-4 w-4" />
+                                {product.stock > 0 ? 'Añadir al carrito' : 'Agotado'}
+                            </Link>
                         </Button>
 
                         <Button className="flex-1" disabled={product.stock === 0}>
