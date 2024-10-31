@@ -452,12 +452,36 @@
         "tags": [
           "product"
         ],
-        "summary": "Returns all store products",
-        "description": "Retrieve a list of all products available in the store.",
+        "summary": "Returns a paginated list of products",
+        "description": "Retrieve a list of products with pagination options",
         "operationId": "getAllProducts",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to retrieve",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "example": 5,
+              "minimum": 1
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "successful operation",
             "content": {
               "application/json": {
                 "schema": {
@@ -470,7 +494,7 @@
             }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Api error"
           }
         }
       },
@@ -656,6 +680,156 @@
           },
           "404": {
             "description": "Product not found"
+          }
+        }
+      }
+    },
+    "/products/byCategory": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Retrieve products by category",
+        "description": "Fetches all products that belong to a specific category",
+        "operationId": "getProductsByCategory",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "ID of the category to filter products by",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "46846546"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid category ID supplied"
+          },
+          "404": {
+            "description": "Category or products not found"
+          },
+          "500": {
+            "description": "API error"
+          }
+        }
+      }
+    },
+    "/products/search": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Retrieve products by name",
+        "description": "Fetches products that match a specific name",
+        "operationId": "getProductsByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the product to filter by",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bolso de yute"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid name parameter supplied"
+          },
+          "404": {
+            "description": "Product not found"
+          },
+          "500": {
+            "description": "API error"
+          }
+        }
+      }
+    },
+    "/products/byPriceRange": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Retrieve products by price range",
+        "description": "Fetches products within a specific price range",
+        "operationId": "getProductsByPriceRange",
+        "parameters": [
+          {
+            "name": "minPrice",
+            "in": "query",
+            "description": "Minimum price for the product filter",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1000
+            }
+          },
+          {
+            "name": "maxPrice",
+            "in": "query",
+            "description": "Maximum price for the product filter",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 5000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid price range parameters"
+          },
+          "404": {
+            "description": "No products found in the specified price range"
+          },
+          "500": {
+            "description": "API error"
           }
         }
       }

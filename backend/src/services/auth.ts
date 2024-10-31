@@ -121,7 +121,7 @@ class AuthService {
         // Si coinciden, generar un nuevo token
         const token = createToken({ id: user.id, role: user.registrationType });
 
-        return { message: "Login exitoso", token };
+        return { message: "Login exitoso", token, user: user };
       } else {
         throw new Error("Contraseña incorrecta");
       }

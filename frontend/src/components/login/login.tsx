@@ -81,7 +81,7 @@ export const Login = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-[#f27405] text-white p-2 rounded-md hover:bg-orange-700 transition"
+                        className="w-full  bg-[#FF8E42] text-[#260A03] p-2 rounded-md hover:bg-[#F2CB05]  transition"
                     >
                         Log In
                     </button>
