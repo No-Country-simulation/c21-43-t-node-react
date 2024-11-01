@@ -31,7 +31,10 @@ class AuthService {
       // 1. Verificar si el email ya existe en la tabla de usuarios
       const existingUser = await UsersService.getByEmail(email);
       if (existingUser) {
-        throw new Error("El usuario ya está registrado");
+        const error: any = new Error("El usuario ya está registrado");
+        error["statusCode"] = 400;
+
+        throw error;
       }
 
       // 2. Crear el usuario en la tabla de `User`
@@ -69,7 +72,7 @@ class AuthService {
         token: token,
       };
     } catch (error: any) {
-      throw new Error(error.message || "Error al registrar el usuario");
+      throw error;
     }
   }
 
@@ -107,7 +110,11 @@ class AuthService {
       const userAuth: any = await Auth.findOne({ where: { userId: user.id } });
 
       if (!userAuth) {
-        throw new Error("No se encontraron credenciales asociadas al usuario");
+        const error: any = new Error(
+          "No se encontraron credenciales asociadas al usuario"
+        );
+        error["statusCode"] = 404;
+        throw error;
       }
 
       // Descomponer la contraseña almacenada (salt:hash)
@@ -123,7 +130,9 @@ class AuthService {
 
         return { message: "Login exitoso", token, user: user };
       } else {
-        throw new Error("Contraseña incorrecta");
+        const error: any = new Error("Contraseña incorrecta");
+        error["statusCode"] = 401;
+        throw error;
       }
     } catch (error) {
       throw error;

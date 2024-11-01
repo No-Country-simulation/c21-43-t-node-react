@@ -71,7 +71,11 @@ class UsersService {
     try {
       const users = await User.destroy({ where: { id } });
       if (!users) {
-        throw new Error("No existe el usuario en nuestros registros");
+        const error: any = new Error(
+          "No existe el usuario en nuestros registros"
+        );
+        error["statusCode"] = 404;
+        throw error;
       }
 
       return `Usuario eliminado correctamente`;
