@@ -9,14 +9,20 @@ import { Cart } from "@/interfaces";
 import Link from "next/link";
 import axios from "axios";
 
-export const ProductCart = ({ products }: { products: Cart[]},
-) => {
-    const  paymentProducts =  async (products: any, cartId: string) =>{
-        console.log(products);
+export const ProductCart = ({ products, cartId }: { products: Cart[], cartId: string | null} ) => {
+
+    const  paymentProducts =  async (products: any, cartId: string | null) =>{
+        
         const response = await axios.post(
-            "http://localhost:3000/mercadoPago/create-order",{cartId,products}
+            `${process.env.NEXT_PUBLIC_API_URL}/mercadoPago/create-order`,
+            {
+                cartId,
+                products
+            }
         )
+
         window.location.href = response.data;
+        
     };
 
     const [productos, setProductos] = useState<Cart[]>(products);
@@ -107,7 +113,7 @@ export const ProductCart = ({ products }: { products: Cart[]},
                                 <span>Total</span>
                                 <span>${total.toFixed(2)}</span>
                             </div>
-                            <Button  onClick={()=>paymentProducts(productos)} className="w-full" disabled={productos.length === 0}>
+                            <Button  onClick={()=>paymentProducts(productos, cartId)} className="w-full" disabled={productos.length === 0}>
                                 Proceder al Pago
                             </Button>
                             <Button variant="outline" className="w-full">

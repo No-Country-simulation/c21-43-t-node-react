@@ -10,14 +10,23 @@ const Page = () => {
     const { getUserId } = useStore();
     const useruiid = getUserId();
     const [products, setProducts] = useState<Cart[]>([]);
+    const [cartData, setCartData] = useState<{ products: Cart[], cartId: string | null }>({ products: [], cartId: null });
 
     useEffect(() => {
 
         const fetchCartDetails = async () => {
 
             try {
-                const response = await axios.get(`http://localhost:3000/cart/cartDetail/${useruiid}`);
-                setProducts(response.data.products || []);
+
+                console.log(useruiid)
+
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cart/cartDetail/${useruiid}`);
+
+                setCartData({
+                    products: response.data.products || [],
+                    cartId: response.data.cartId.id || '',
+                });
+
             } catch (error) {
                 console.error("Error al obtener productos del carrito:", error);
             }
@@ -28,9 +37,7 @@ const Page = () => {
 
     }, [useruiid]);
 
-	if(products) console.log(products)
-
-    return <ProductCart products={products} />;
+    return <ProductCart products={cartData.products} cartId={cartData.cartId} />;
 };
 
 export default Page;

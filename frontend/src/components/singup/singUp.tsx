@@ -20,7 +20,7 @@ export const Signup = () => {
 
         try {
 
-            const response = await axios.post('http://localhost:3000/cart/create', { userId });
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/cart/create`, { userId });
 
             console.log('response create cart', response);
 
@@ -58,9 +58,7 @@ export const Signup = () => {
 
         try {
 
-
-            //const response = await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/auth/register', userData);
-            const response = await axios.post('http://localhost:3000/auth/register', userData);
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, userData);
 
             if (response.status === 200) {
 

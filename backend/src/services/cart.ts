@@ -102,9 +102,8 @@
                     where:{
                         CartId: (cartVerify as any).id
                     },
-                    attributes: {exclude: []}
+                    attributes: {exclude: ["deletedAt"]}
                 })
-
 
                 const products = await Product.findAll({
                     where:{

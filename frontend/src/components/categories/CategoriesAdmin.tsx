@@ -28,7 +28,7 @@ export const CategoriesAdmin = () => {
 
         try {
 
-            const response = await axios.post('http://localhost:3000/category', { name });
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/category`, { name });
 
             if (response.status == 201) {
                 setCategories([...categories, response.data.data]);
@@ -66,8 +66,7 @@ export const CategoriesAdmin = () => {
 
             try {
 
-                //const response = await axios.get('https://c21-43-t-node-react-production-227f.up.railway.app/category');
-                const response = await axios.get('http://localhost:3000/category');
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/category`);
                 setCategories(response.data.data || []);
 
             } catch (error) {

@@ -31,7 +31,7 @@ const CartDetail = sequelize.define<CartDetailData>("CartDetail", {
     },
 }, {
     // Opciones del modelo
-    paranoid: true, // Si deseas utilizar el soft delete
+    paranoid: false, // Si deseas utilizar el soft delete
     timestamps: true, // Para habilitar createdAt y updatedAt
 });
 
