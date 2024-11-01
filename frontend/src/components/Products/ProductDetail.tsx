@@ -46,7 +46,7 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
 
         try {
 
-            const response = await axios.put("http://localhost:3000/cart/addToCart",
+            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/cart/addToCart`,
                 {
                     userId: useruiid,
                     productId: product.id,

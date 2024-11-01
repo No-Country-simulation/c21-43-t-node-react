@@ -9,6 +9,7 @@
 # Next
 
 /frontend/.next
+/frontend/.env.local
 
 
 Variables de entorno

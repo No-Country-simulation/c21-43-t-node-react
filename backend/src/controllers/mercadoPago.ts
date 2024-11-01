@@ -4,7 +4,7 @@ import { Cart, Order, CartDetail, Product} from "../models/associations";
 import dotenv from "dotenv";
 import axios from "axios";
 dotenv.config();
-const { ACCESS_TOKEN } = process.env;
+const { ACCESS_TOKEN, URL_FRONT, URL_BACK } = process.env;
 
 const client = new MercadoPagoConfig({
   accessToken: ACCESS_TOKEN as string,
@@ -12,7 +12,7 @@ const client = new MercadoPagoConfig({
 });
 
 //Hardcodeo el shippingAddres para probar
-let address = "calle 1 #2-3";
+let address = "Calle Principal 123";
 export const createOrderPaymentController = async (req:Request, res:Response, next: NextFunction) =>{
     const {cartId, products} = req.body;
     console.log(products);
@@ -27,13 +27,13 @@ export const createOrderPaymentController = async (req:Request, res:Response, ne
             })),
             binary_mode:true, //Los pagos pueden ser aprobados o rechazados.
             back_urls:{
-              success: "http://localhost:3000/mercadoPago/success", //DEPLOY PAGINA PRINCIPAL
-              failure: "http://localhost:3000/mercadoPago/failure",//DEPLOY vista "Fallo en la compra"
-              pending: "http://localhost:3000/mercadoPago/pending"
+              success: `${URL_FRONT}/mercado-pago/success`, //DEPLOY PAGINA PRINCIPAL
+              failure: `${URL_FRONT}/mercado-pago/failure`,//DEPLOY vista "Fallo en la compra"
+              pending: `${URL_BACK}/mercado-pago/pending`
             },
             external_reference: cartId,
             auto_return: "approved", //Si se aprueba el pago, redirreciona al success automaticamente
-            //notification_url:"https://409c-190-244-39-67.ngrok-free.app/mercadoPago/webhook",// ACA VA IR EL DEPLOY
+            notification_url:`${URL_BACK}/mercadoPago/webhook`,// ACA VA IR EL DEPLOY
         }
 
         const preference = new Preference(client);
