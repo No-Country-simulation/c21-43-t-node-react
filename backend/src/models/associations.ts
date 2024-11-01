@@ -20,13 +20,19 @@ Review.belongsTo(Product);
 Cart.belongsToMany(Product,{through:CartDetail}); //Un carrito puede tener muchos Productos
 Product.belongsToMany(Cart,{through:CartDetail}); //Un producto puede estar en muchos carritos
 
+Cart.hasMany(CartDetail);
+CartDetail.belongsTo(Cart);
 
-// Cart.hasMany(CartDetail);
-// CartDetail.belongsTo(Cart);
+CartDetail.belongsTo(Product);
+Product.hasMany(CartDetail)
 
 
 Cart.hasMany(Order);
 Order.belongsTo(Cart);
+
+
+// User.hasMany(Order);
+// Order.belongsTo(User);
 
 Product.belongsToMany(Category,{through: "ProductCategory"});
 Category.belongsToMany(Product,{through: "ProductCategory"});

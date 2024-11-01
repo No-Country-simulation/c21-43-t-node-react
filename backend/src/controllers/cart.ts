@@ -2,15 +2,17 @@ import CartService from "../services/cart";
 import { Request,Response,NextFunction } from "express";
 import { cartData } from "../types/type";
 
+
 class CartController{
-    static async createCart(req:Request, res:Response, next: NextFunction){
+    static async createCart(req: Request, res: Response, next: NextFunction) {
         try {
-            const cart = await CartService.CreateCart(req.body);
-            res.status(200).json({message:"Cart Creado",data:cart})
+            const { userId } = req.body; // Asegúrate de que el cuerpo de la solicitud incluye userId
+            const cart = await CartService.CreateCart(userId);
+            res.status(200).json({ message: "Cart Creado", data: cart });
         } catch (error) {
             next(error);
         }
-    };
+    }
 
     static async getCartDetail(req:Request, res:Response, next: NextFunction){
         try {

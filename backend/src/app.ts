@@ -4,6 +4,7 @@ import morgan from "morgan";
 import indexRouter from "./routes/index";
 import errorHandler from "./middlewares/errorHandler";
 import cors from "cors";
+import mercadopagoRouter from "./routes/mercadoPago";
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", indexRouter);
-
+app.use("/mercadoPago",mercadopagoRouter);
 app.use(errorHandler);
 
 export default app;
