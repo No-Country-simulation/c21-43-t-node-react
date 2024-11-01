@@ -1,13 +1,8 @@
-"use client"
-
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { CheckCircle, Package, Truck } from "lucide-react"
-import Link from "next/link"
-
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { CheckCircle, Package, Truck } from "lucide-react";
+import Link from "next/link";
 import axios from "axios";
 
 interface Product {
@@ -35,40 +30,13 @@ interface Order {
     Cart: Cart;
 }
 
+const page = async ({ searchParams }: { searchParams: { external_reference: string } }) => {
 
-const page = async () => {
+    const externalReference = searchParams.external_reference;
 
-    const searchParams = useSearchParams();
-    const externalReference = searchParams.get("external_reference");
-
-    const [orderProducts, setOrderProducts] = useState<CartDetail[]>([])
-    const [orderDetail, setOrderDetail] = useState<Order | null>(null)
-
-    console.log('external_reference', externalReference);
-
-    useEffect(() => {
-
-        const getOrderByCartId = async () => {
-
-            try {
-
-                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/orders/${externalReference}`);
-
-                setOrderDetail(response.data.order)
-                setOrderProducts(response.data.order.Cart.CartDetails);
-
-            } catch (error) {
-
-                console.log(error);
-
-            }
-        }
-
-        if (externalReference) {
-            getOrderByCartId();
-        }
-
-    }, [externalReference]);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/orders/${externalReference}`);
+    const orderDetail: Order = response.data.order;
+    const orderProducts: CartDetail[] = orderDetail.Cart.CartDetails;
 
     return (
         <div className="container mx-auto p-4">
@@ -145,3 +113,4 @@ const page = async () => {
 }
 
 export default page;
+
