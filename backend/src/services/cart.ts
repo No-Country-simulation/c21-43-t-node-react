@@ -102,7 +102,7 @@
                     where:{
                         CartId: (cartVerify as any).id
                     },
-                    attributes: {exclude: ['CartId', 'createdAt', 'updatedAt','id']}
+                    attributes: {exclude: []}
                 })
 
 
@@ -113,7 +113,7 @@
                     include:{
                         model: Category,
                         attributes:["id","name"],
-                        through:{attributes:[]}
+                        through:{attributes:[]},
                     }
                 });
 
@@ -125,7 +125,7 @@
                     };
                 });
 
-                return { success: true, products: result };
+                return { success: true, products: result, cartId: cartVerify };
 
             } catch (error) {
                 throw new Error(`Error al obtener los detalles del carrito ${error}`)

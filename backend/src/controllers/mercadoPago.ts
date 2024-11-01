@@ -15,13 +15,14 @@ const client = new MercadoPagoConfig({
 let address = "calle 1 #2-3";
 export const createOrderPaymentController = async (req:Request, res:Response, next: NextFunction) =>{
     const {cartId, products} = req.body;
+    console.log(products);
     try {
         const body = {
             items: products.map((product:any) => ({
                 id: product.id,
                 title: product.name,     
                 quantity:product.quantity,            
-                unit_price:product.price, 
+                unit_price:Number(product.price), 
                 currency_id: "ARS",
             })),
             binary_mode:true, //Los pagos pueden ser aprobados o rechazados.
@@ -32,13 +33,14 @@ export const createOrderPaymentController = async (req:Request, res:Response, ne
             },
             external_reference: cartId,
             auto_return: "approved", //Si se aprueba el pago, redirreciona al success automaticamente
-            // notification_url:"https://5f82-190-244-39-67.ngrok-free.app/mercadoPago/webhook",// ACA VA IR EL DEPLOY
+            //notification_url:"https://409c-190-244-39-67.ngrok-free.app/mercadoPago/webhook",// ACA VA IR EL DEPLOY
         }
 
         const preference = new Preference(client);
         const result = await preference.create({body});
-        res.status(200).json(result);
+        res.status(200).json(result.init_point);
     } catch (error) {
+        console.log(error);
         next(error)
     }
 };
@@ -86,13 +88,12 @@ export const receiveWebhookPaymentController = async (req: Request, res: Respons
                         { where: { id: cartId } }
                     );
                 }
-                res.status(200);
                 console.log({message:"Order created and inventory updated successfully.", 
                     Order:order});
             }
         }
 
-        res.status(200).send("Notification received");
+        res.status(204).send("Notification received");
     } catch (error) {
         console.error("Error processing webhook:", error);
         res.status(500).send("Error processing notification");
