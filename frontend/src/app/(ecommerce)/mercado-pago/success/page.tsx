@@ -36,7 +36,7 @@ interface Order {
 }
 
 
-const page = () => {
+const page = async () => {
 
     const searchParams = useSearchParams();
     const externalReference = searchParams.get("external_reference");
@@ -64,7 +64,9 @@ const page = () => {
             }
         }
 
-        getOrderByCartId();
+        if (externalReference) {
+            getOrderByCartId();
+        }
 
     }, [externalReference]);
 
