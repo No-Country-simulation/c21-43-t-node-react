@@ -3,21 +3,24 @@ export interface categoryData {
   name: string;
 }
 
-export interface productData {
-  id?: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  stock: number;
-  categoryId: string[];
+
+export interface productData{
+    id?:string,
+    name:string,
+    description:string,
+    price:number,
+    image:string,
+    stock:number,
+    categoryId:string[];
 }
 
-export interface orderData {
-  id?: string;
-  orderDate: Date;
-  shippingAddress: string;
-  totalAmount: number;
+
+
+export interface orderData{
+    id?:string,
+    orderDate:Date,
+    shippingAddress:string,
+    totalAmount:number
 }
 
 export interface cartData {
@@ -26,10 +29,10 @@ export interface cartData {
   userId?: string;
 }
 
-interface CartDetailData {
-  CartId: number;
-  ProductId: number;
-  quantity: number;
+interface CartDetailData{
+    CartId: string;
+    ProductId: string;
+    quantity: number;
 }
 
 export interface Error {

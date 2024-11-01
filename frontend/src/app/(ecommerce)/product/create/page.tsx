@@ -55,9 +55,8 @@ export default function page() {
 
             try {
 
-                //const response = await axios.get('https://c21-43-t-node-react-production-227f.up.railway.app/category');
-                const response = await axios.get('http://localhost:3000/category');
-                setCategories(response.data.data);
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/category`);
+                setCategories(response.data.data || []);
 
             } catch (error) {
 
@@ -117,8 +116,7 @@ export default function page() {
                 image: uploadedImageUrl
             };
 
-            //await axios.post('https://c21-43-t-node-react-production-227f.up.railway.app/products', newProduct);
-            await axios.post('http://localhost:3000/products', newProduct);
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/products`, newProduct);
 
             setProduct({
                 name: '',
@@ -233,7 +231,7 @@ export default function page() {
                                         </SelectTrigger>
                                         <SelectContent>
                                             {categories.map(category => (
-                                                <SelectItem key={category.id} value={category.id}>
+                                                <SelectItem key={category.id} value={String(category.id)}>
                                                     {category.name}
                                                 </SelectItem>
                                             ))}

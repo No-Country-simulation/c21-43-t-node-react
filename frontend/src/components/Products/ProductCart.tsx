@@ -7,10 +7,26 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Cart } from "@/interfaces";
 import Link from "next/link";
+import axios from "axios";
 
-export const ProductCart = ({ products }: { products: Cart[] }) => {
+export const ProductCart = ({ products, cartId }: { products: Cart[], cartId: string | null} ) => {
+
+    const  paymentProducts =  async (products: any, cartId: string | null) =>{
+        
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/mercadoPago/create-order`,
+            {
+                cartId,
+                products
+            }
+        )
+
+        window.location.href = response.data;
+        
+    };
 
     const [productos, setProductos] = useState<Cart[]>(products);
+    console.log(productos);
 
     useEffect(() => {
         setProductos(products);
@@ -31,7 +47,7 @@ export const ProductCart = ({ products }: { products: Cart[] }) => {
 
     return (
         <div className="container mx-auto p-4 mb-4">
-            <h1 className="text-3xl mb-5">Carrito de Compras</h1>
+            <h2 className="text-3xl mb-5">Carrito de Compras</h2>
             <div className="grid md:grid-cols-3 gap-6">
                 <Card className="md:col-span-2">
                     <CardHeader>
@@ -97,7 +113,7 @@ export const ProductCart = ({ products }: { products: Cart[] }) => {
                                 <span>Total</span>
                                 <span>${total.toFixed(2)}</span>
                             </div>
-                            <Button className="w-full" disabled={productos.length === 0}>
+                            <Button  onClick={()=>paymentProducts(productos, cartId)} className="w-full" disabled={productos.length === 0}>
                                 Proceder al Pago
                             </Button>
                             <Button variant="outline" className="w-full">

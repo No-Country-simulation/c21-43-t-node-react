@@ -31,10 +31,7 @@ class AuthService {
       // 1. Verificar si el email ya existe en la tabla de usuarios
       const existingUser = await UsersService.getByEmail(email);
       if (existingUser) {
-        const error: any = new Error("El usuario ya está registrado");
-        error["statusCode"] = 400;
-
-        throw error;
+        throw new Error("El usuario ya está registrado");
       }
 
       // 2. Crear el usuario en la tabla de `User`
@@ -72,7 +69,7 @@ class AuthService {
         token: token,
       };
     } catch (error: any) {
-      throw error;
+      throw new Error(error.message || "Error al registrar el usuario");
     }
   }
 
