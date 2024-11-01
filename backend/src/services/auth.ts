@@ -28,26 +28,26 @@ class AuthService {
       const { email, name, lastName, phoneNumber, password, registrationType } =
         result.data;
 
-      // 1. Verificar si el email ya existe en la tabla de usuarios
-      const existingUser = await UsersService.getByEmail(email);
-      if (existingUser) {
-        throw new Error("El usuario ya está registrado");
-      }
+        // 1. Verificar si el email ya existe en la tabla de usuarios
+        const existingUser = await UsersService.getByEmail(email);
+        if (existingUser) {
+          throw new Error("El usuario ya está registrado");
+        }
 
-      // 2. Crear el usuario en la tabla de `User`
-      const newUser: any = await UsersService.create({
-        name,
-        lastName,
-        phoneNumber,
-        email,
-        registrationType,
-      });
+        // 2. Crear el usuario en la tabla de `User`
+        const newUser: any = await UsersService.create({
+          name,
+          lastName,
+          phoneNumber,
+          email,
+          registrationType,
+        });
 
-      // 3. Generar un salt único para este usuario
-      const salt = UUID();
+        // 3. Generar un salt único para este usuario
+        const salt = UUID();
 
-      // 4. Hashear la contraseña usando tu función `createSaltAndHash`
-      const hashedPassword = createSaltAndHash(password, salt);
+        // 4. Hashear la contraseña usando tu función `createSaltAndHash`
+        const hashedPassword = createSaltAndHash(password, salt);
 
       // 5. Generar el token que contiene la información del rol
       const token = createToken({
@@ -56,22 +56,22 @@ class AuthService {
         role: newUser.registrationType,
       });
 
-      // 6. Guardar el password hasheado y el id del usuario.
-      const authRecord = await Auth.create({
-        userId: newUser.id, // el id del usuario recién creado
-        password: hashedPassword, // la contraseña hasheada
-      });
+        // 6. Guardar el password hasheado y el id del usuario.
+        const authRecord = await Auth.create({
+          userId: newUser.id, // el id del usuario recién creado
+          password: hashedPassword, // la contraseña hasheada
+        });
 
-      return {
-        message: "Usuario registrado exitosamente",
-        user: newUser,
-        authRecord: authRecord,
-        token: token,
-      };
-    } catch (error: any) {
-      throw new Error(error.message || "Error al registrar el usuario");
+        return {
+          message: "Usuario registrado exitosamente",
+          user: newUser,
+          authRecord: authRecord,
+          token: token,
+        };
+      } catch (error: any) {
+        throw new Error(error.message || "Error al registrar el usuario");
+      }
     }
-  }
 
   static async login(data: any) {
     try {
@@ -92,8 +92,8 @@ class AuthService {
 
       const { email, password } = result.data;
 
-      // Buscar usuario por su email
-      const user: any = await UsersService.getByEmail(email);
+        // Buscar usuario por su email
+        const user: any = await UsersService.getByEmail(email);
 
       if (!user) {
         {
@@ -106,20 +106,20 @@ class AuthService {
       // Buscar las credenciales del usuario en la tabla 'Auth'
       const userAuth: any = await Auth.findOne({ where: { userId: user.id } });
 
-      if (!userAuth) {
-        throw new Error("No se encontraron credenciales asociadas al usuario");
-      }
+        if (!userAuth) {
+          throw new Error("No se encontraron credenciales asociadas al usuario");
+        }
 
-      // Descomponer la contraseña almacenada (salt:hash)
-      const [salt, storedHash] = userAuth.password.split(":");
+        // Descomponer la contraseña almacenada (salt:hash)
+        const [salt, storedHash] = userAuth.password.split(":");
 
-      // Hashear la contraseña ingresada con el mismo salt
-      const hashedPassword = createSaltAndHash(password, salt);
+        // Hashear la contraseña ingresada con el mismo salt
+        const hashedPassword = createSaltAndHash(password, salt);
 
-      // Comparar el hash almacenado con el hash generado
-      if (hashedPassword === userAuth.password) {
-        // Si coinciden, generar un nuevo token
-        const token = createToken({ id: user.id, role: user.registrationType });
+        // Comparar el hash almacenado con el hash generado
+        if (hashedPassword === userAuth.password) {
+          // Si coinciden, generar un nuevo token
+          const token = createToken({ id: user.id, role: user.registrationType });
 
         return { message: "Login exitoso", token, user: user };
       } else {
@@ -130,13 +130,13 @@ class AuthService {
     }
   }
 
-  // static async logout() {
-  //   try {
-  //     return { message: "Logout exitoso" };
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
-}
+    // static async logout() {
+    //   try {
+    //     return { message: "Logout exitoso" };
+    //   } catch (error) {
+    //     throw error;
+    //   }
+    // }
+  }
 
-export default AuthService;
+  export default AuthService;

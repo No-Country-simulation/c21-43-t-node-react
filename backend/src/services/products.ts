@@ -117,6 +117,17 @@ class ProductService {
       // Obtener los datos validados
       const validData = validationResult.data;
 
+      const existingProduct = await Product.findOne({
+        where: {
+          name: validData.name,
+        },
+      });
+  
+      if (existingProduct) {
+        throw new Error(`El producto con el nombre "${validData.name}" ya existe.`);
+      }
+
+      
       const product = await Product.create({
         name: validData.name,
         description: validData.description,
