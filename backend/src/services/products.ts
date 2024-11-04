@@ -109,9 +109,11 @@ class ProductService {
         const errorMessages = validationResult.error.errors
           .map((err) => err.message)
           .join(". ");
-        throw new Error(
+        const error: any = new Error(
           `Datos de creación de producto inválidos: ${errorMessages}`
         );
+        error["statusCode"] = 400;
+        throw error;
       }
 
       // Obtener los datos validados
@@ -138,7 +140,7 @@ class ProductService {
       await (product as any).addCategories(data.categoryId);
       return product;
     } catch (error) {
-      throw new Error(`Error al crear el producto: ${error}`);
+      throw error;
     }
   }
 
@@ -165,14 +167,20 @@ class ProductService {
         const errorMessages = validationResult.error.errors
           .map((err) => err.message)
           .join(". ");
-        throw new Error(`Datos de actualización inválidos: ${errorMessages}`);
+        const error: any = new Error(
+          `Datos de actualización inválidos: ${errorMessages}`
+        );
+        error["statusCode"] = 400;
+        throw error;
       }
 
       const validData = validationResult.data;
 
       const product = await Product.findByPk(id);
       if (!product) {
-        throw new Error("El producto no existe");
+        const error: any = new Error("El producto no existe");
+        error["statusCode"] = 404;
+        throw error;
       }
 
       await product.update(validData);
@@ -191,7 +199,7 @@ class ProductService {
 
       return updatedProduct;
     } catch (error) {
-      throw new Error(`Error al actualizar el producto: ${error}`);
+      throw error;
     }
   }
 }
